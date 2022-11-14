@@ -10,7 +10,6 @@ import {useState} from "react";
 
 import UserNewForm from "../../components/_dashboard/user/UserNewForm";
 import ChangePasswordForm from "../../components/authentication/change-password/ChangePasswordForm";
-import OrderShipping from "./OrderShipping";
 //----------------------------------------------------------------------------------------------
 const RootStyle = styled(Page)(({theme}) => ({
     paddingTop: theme.spacing(8),
@@ -56,12 +55,6 @@ export default function Profile() {
         component: <ChangePasswordForm/>
     }
     ];
-
-    if (isShipper) PROFILE_TABS.push({
-        value: 'Đơn hàng vận chuyển',
-        icon: <Icon icon="icon-park-outline:transaction-order" width={20} height={20}/>,
-        component: <OrderShipping/>
-    })
 
 
     return (

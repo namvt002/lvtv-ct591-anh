@@ -38,7 +38,6 @@ const Loadable = (Component) => (props) => {
 export default function Router() {
     const isLogined = !!useSelector(state => state.user.current?.id);
     const isAdmin = useSelector(state => state.user.current?.role) === "ADMIN";
-    const isEmployee = useSelector(state => state.user.current?.role) === "EMPLOYEE";
 
     return useRoutes([
         {
@@ -61,61 +60,50 @@ export default function Router() {
         // Dashboard Routes
         {
             path: 'dashboard',
-            element: (isAdmin || isEmployee) ? <DashboardLayout/> : <Navigate to='/'/>,
+            element: (isAdmin) ? <DashboardLayout/> : <Navigate to='/'/>,
             children: [
-                {
-                    path: '/',
-                    element: <Analytic/>
-                },
                 {
                     path: 'user',
                     children: [
                         {
-                            path: '/',
+                            path: '',
                             element: <UserList/>,
                         },
                         {path: 'list', element: <UserList/>},
-                        {path: 'new', element: <UserCreate/>},
-                        {path: '/:id/edit', element: <UserCreate/>},
                     ],
                 },
                 {
                     path: 'course',
                     children: [
                         {
-                            path: '/',
+                            path: '',
                             element: <Course/>,
                         },
                         {
-                            path: '/new',
-                            element: <BookCreate/>,
+                            path: 'new',
+                            element: <CourseCreate/>,
                         },
                         {
-                            path: '/:id/edit',
-                            element: <BookCreate/>,
+                            path: ':id/edit',
+                            element: <CourseCreate/>,
                         },
                     ],
+                }, {
+                    path: 'lesson',
+                    children: [{
+                        path: '',
+                        element: <Lesson/>,
+                    },
+                        {
+                            path: 'new',
+                            element: <LessonCreate/>
+                        }, {
+                            path: ':id/edit',
+                            element: <LessonCreate/>
+                        }]
                 },
                 {
-                    path: 'role',
-                    children: [
-                        {
-                            path: '/',
-                            element: <RoleList/>,
-                        },
-                        {
-                            path: '/new',
-                            element: <RoleCreate/>,
-                        },
-                        {
-                            path: '/:id/edit',
-                            element: <RoleCreate/>,
-                        },
-                    ],
-                },
-                
-                {
-                    path: '/store',
+                    path: 'store',
                     element: <Store/>
                 }
             ],
@@ -136,7 +124,7 @@ export default function Router() {
             element: <MainLayout/>,
             children: [{
                 path: '/',
-                element: <ProductList/>
+                element: <CourseList/>
             }, {
                 path: 'change-password',
                 element: <ChangePassword/>
@@ -144,14 +132,11 @@ export default function Router() {
                 path: 'profile',
                 element: isLogined ? <Profile/> : <Navigate to='/'/>
             }, {
-                path: 'product',
-                element: <ProductFilter/>
-            }, {
-                path: 'shopcart',
-                element: <ShopCart/>
-            }, {
-                path: 'product-detail/:id',
-                element: <ProductDetail/>
+                path: 'run-code',
+                element: <RunCode/>
+            },{
+                path: 'course-content/:id',
+                element: <CourseContent />
             }
             ]
         },
@@ -178,31 +163,18 @@ const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetP
 //--------------------------------user------------------------------
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 
-const UserCreate = Loadable(
-    lazy(() => import('../pages/dashboard/UserCreate')),
-);
-
 const Profile = Loadable(lazy(() => import('../pages/homepages/Profile')))
-
-//-------------------------role-------------------------------------
-const RoleList = Loadable(lazy(() => import('../pages/dashboard/RoleList')));
-const RoleCreate = Loadable(
-    lazy(() => import('../pages/dashboard/RoleCreate')),
-);
-
-
-
-const ProductList = Loadable(lazy(() => import('../pages/homepages/ShopProduct')));
-const ProductFilter = Loadable(lazy(() => import('../pages/homepages/ProductFilter')));
-const ProductDetail = Loadable(lazy(() => import('../pages/homepages/ProductDetail')));
-const ShopCart = Loadable(lazy(() => import('../pages/homepages/ShopCart')));
-const BookCreate = Loadable(
-    lazy(() => import('../pages/dashboard/BookCreate')),
-);
-
 
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 const Store = Loadable(lazy(() => import('../pages/dashboard/Store')));
-const Analytic = Loadable(lazy(() => import('../pages/dashboard/Analytic')));
-const Course = Loadable(lazy(()=>import('../pages/dashboard/Course')))
+
+const Course = Loadable(lazy(() => import('../pages/dashboard/Course')))
+const CourseList = Loadable(lazy(() => import('../pages/homepages/CourseList')))
+const CourseCreate = Loadable(lazy(() => import('../pages/dashboard/CourseCreate')))
+const CourseContent  = Loadable(lazy(()=> import('../pages/homepages/CourseContent')));
+
+const Lesson = Loadable(lazy(() => import('../pages/dashboard/Lesson')))
+const LessonCreate = Loadable(lazy(() => import('../pages/dashboard/LessonCreate')))
+
+const RunCode = Loadable(lazy(() => import('../pages/homepages/RunCode')))

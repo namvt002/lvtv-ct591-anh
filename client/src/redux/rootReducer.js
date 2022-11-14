@@ -4,13 +4,15 @@ import userReducer from './slices/user';
 import cartReducer from './slices/cart';
 import productReducer from './slices/product';
 import storeReducer from './slices/store';
+import codeReducer from './slices/code';
 // ----------------------------------------------------------------------
 
 const rootReducer = combineReducers({
     user: userReducer,
     cart: cartReducer,
     product: productReducer,
-    store: storeReducer
+    store: storeReducer,
+    code: codeReducer
 });
 
 export {rootReducer};

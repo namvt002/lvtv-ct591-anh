@@ -15,7 +15,8 @@ const getIcon = (name) => (
 const ICONS = {
     user        : getIcon('ic_user'),
     store       : getIcon('ic_store'),
-    course      : getIcon('ic_course')
+    course      : getIcon('ic_course'),
+    lesson      : getIcon('ic_lesson')
 };
 
 const sidebarConfig = [
@@ -37,7 +38,11 @@ const sidebarConfig = [
                 path    : PATH_DASHBOARD.course.root,
                 icon    : ICONS.course,
             },
-        ],
+            {
+                title   : 'Bài học',
+                path    : PATH_DASHBOARD.lesson.root,
+                icon    : ICONS.lesson
+            }],
     },
 ];
 

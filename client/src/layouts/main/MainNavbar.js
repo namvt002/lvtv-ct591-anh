@@ -75,7 +75,9 @@ export default function MainNavbar() {
                         {store.ch_ten}
                     </Typography>
                     <Box sx={{flexGrow: 1}}/>
-                    <Searchbar/>
+                    <Box mx={2}>
+                        <Searchbar />
+                    </Box>
                    
                     {isLogined ? (
                         <AccountPopover/>

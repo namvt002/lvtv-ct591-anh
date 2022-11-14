@@ -56,7 +56,7 @@ export default function Store() {
     return <>
         <Page title="Cửa hàng">
             <Container>
-                <Typography variant='h3'>Thông tin cửa hàng</Typography>
+                <Typography variant='h3'>Thông tin trang web</Typography>
                 <FormikProvider value={formik}>
                     <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -76,7 +76,7 @@ export default function Store() {
                                         </Typography>
                                         <Typography variant="subtitle2">{store.ch_email}</Typography>
                                     </Stack>
-                                    {isAdmin && <Stack direction="row" justifyContent="end">
+                                    {isAdmin && <Stack direction="row" justifyContent="end" sx={{m:'2rem 0'}}>
                                         {!isEdit && <Button variant='contained' onClick={() => setEdit(true)}>
                                             Chỉnh sửa
                                         </Button>}

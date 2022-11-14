@@ -30,7 +30,7 @@ const SearchbarStyle = styled('div')(({theme}) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 9999
+    zIndex: 9999,
 }));
 
 const ThumbImgStyle = styled('img')(({theme}) => ({

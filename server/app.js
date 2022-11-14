@@ -62,6 +62,8 @@ require("./routes/Users")(app);
 require("./routes/Role")(app);
 require("./routes/phieunhap")(app);
 require("./routes/khoahoc")(app);
+require("./routes/orther")(app);
+require("./routes/code")(app);
 
 function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
