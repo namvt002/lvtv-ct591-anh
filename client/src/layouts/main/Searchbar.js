@@ -20,7 +20,6 @@ import {getData} from "../../_helper/httpProvider";
 import {API_BASE_URL, URL_PUBLIC_IMAGES} from "../../config/configUrl";
 import {PATH_PAGE} from "../../routes/paths";
 import {Link as RouterLink, Link, useNavigate} from "react-router-dom";
-import {fCurrency} from "../../_helper/formatCurrentCy";
 // components
 
 // ----------------------------------------------------------------------
@@ -49,7 +48,7 @@ export default function Searchbar() {
 
     useEffect(() => {
         (async () => {
-            const _res = await getData(API_BASE_URL + `/api/filterbook?search=${search}`);
+            const _res = await getData(API_BASE_URL + `/api/khoahoc?search=${search}`);
             setProducts(_res.data)
         })()
     }, [search])
@@ -120,9 +119,11 @@ export default function Searchbar() {
                     }
                     sx={{mr: 1, fontWeight: 'fontWeightBold'}}
                 />
-                <Button variant="contained" sx={{width: '9rem'}} onClick={() => {
-                    navigate(`${PATH_PAGE.product}?search=${search}`)
-                }}>
+                <Button variant="contained" sx={{width: '9rem'}} 
+                    // onClick={() => {
+                    //     navigate(`${PATH_PAGE.product}?search=${search}`)
+                    // }}
+                >
                     Tìm kiếm
                 </Button>
             </SearchbarStyle>
@@ -144,46 +145,24 @@ export default function Searchbar() {
                         <TableBody>
                             {products?.map((product) => {
                                 const {
-                                    sp_id, sp_ten, ctpn_gia, sp_hinhanh, sp_giakhuyenmai, tl_ten, tg_ten, sp_masp
+                                    kh_makh, kh_ten, kh_hinhanh
                                 } = product;
-                                const linkTo = `${PATH_PAGE.productDetail}/${sp_id}`;
+                                const linkTo = `${PATH_PAGE.course_content}/${kh_makh}`;
                                 return (
                                     <TableRow>
                                         <TableCell>
                                             <Box sx={{display: 'flex', alignItems: 'center'}}>
                                                 <ThumbImgStyle alt="product image"
-                                                               src={URL_PUBLIC_IMAGES + sp_hinhanh[sp_hinhanh.length - 1].ha_hinh}/>
+                                                               src={URL_PUBLIC_IMAGES + kh_hinhanh}/>
                                                 <Box>
                                                     <Link to={linkTo} color="inherit" component={RouterLink}>
                                                         <Typography variant="subtitle2">
-                                                            {sp_masp} - {sp_ten}
+                                                            {kh_makh} - {kh_ten}
                                                         </Typography>
 
                                                     </Link>
                                                 </Box>
                                             </Box>
-                                        </TableCell>
-
-                                        <TableCell>
-                                            <Stack>
-                                                <Typography variant='subtitle2'>{tl_ten} </Typography>
-                                                <Typography variant='subtitle2'>{tg_ten} </Typography>
-                                            </Stack>
-                                        </TableCell>
-
-                                        <TableCell align="left">
-                                            <Typography
-                                                component="span"
-                                                variant="body1"
-                                                sx={{
-                                                    color: 'text.disabled', textDecoration: 'line-through'
-                                                }}
-                                            >
-                                                {!!sp_giakhuyenmai && fCurrency(ctpn_gia)}
-                                            </Typography>
-                                            <Typography>
-                                                {!!sp_giakhuyenmai ? fCurrency(sp_giakhuyenmai) : fCurrency(ctpn_gia)}
-                                            </Typography>
                                         </TableCell>
                                     </TableRow>
                                 )

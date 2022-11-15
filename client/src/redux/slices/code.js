@@ -1,6 +1,6 @@
-import {createSelector, createSlice} from '@reduxjs/toolkit';
+import { createSlice} from '@reduxjs/toolkit';
 
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 const slice = createSlice({
     name: 'code',

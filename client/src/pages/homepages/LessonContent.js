@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {getData} from "../../_helper/httpProvider";
 import {API_BASE_URL} from "../../config/configUrl";
-import {Box, Button, Stack, Typography} from "@material-ui/core";
-import {Icon} from "@iconify/react";
+import {Box, Button, Typography} from "@material-ui/core";
+// import {Icon} from "@iconify/react";
 import Code from "../../components/code/Code";
 import {runCode} from "../../redux/slices/code";
 import {PATH_PAGE} from "../../routes/paths";

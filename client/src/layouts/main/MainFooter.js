@@ -13,23 +13,19 @@ import Logo from '../../components/Logo';
 
 const LINKS = [
     {
-        headline: 'Dịch vụ',
+        headline: 'Khóa học',
         children: [
-            {name: 'Điều khoản dịch vụ', href: PATH_PAGE.product},
-            {name: 'Chính sách bảo mật thông tin cá nhân', href: PATH_PAGE.product},
-            {name: 'Chính sách bảo mật thông tin thanh toán', href: PATH_PAGE.product},
-            {name: 'Giới thiệu HYPE', href: PATH_PAGE.product}
+            {name: 'Khóa học HTML', href: '#'},
+            {name: 'Khóa học CSS', href: '#'},
+            {name: 'Khóa học JavaScript', href: '#'},
+            {name: 'Khóa học Python', href: '#'},
         ]
     },
     {
         headline: 'Hỗ trợ',
         children: [
-            {name: 'Chính sách đổi - trả - hoàn tiền', href: '#'},
-            {name: 'Chính sách bảo hành- bồi hoàn', href: '#'},
-            {name: 'Chính sách vận chuyển', href: '#'},
-            {name: 'Chính sách bán sỉ', href: '#'},
-            {name: 'Phương thức thanh toán', href: '#'},
-            
+            {name: 'Quên mật khẩu', href: '#'},
+            {name: 'Đổi mật khẩu', href: '#'},            
         ]
     },
     {
@@ -37,7 +33,6 @@ const LINKS = [
         children: [
             {name: 'Đăng nhập/Tạo mới tài khoản', href: '#'},
             {name: 'Chi tiết tài khoản', href: '#'},
-            {name: 'Lịch sử mua hàng', href: '#'}
         ]
     }
 ];
@@ -66,8 +61,7 @@ export default function MainFooter() {
                     </Grid>
                     <Grid item xs={8} md={3}>
                         <Typography variant="body2" sx={{pr: {md: 5}}}>
-                           Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br /> Nhà sách HYBE nhận đặt hàng trực tuyến và giao hàng tận
-                            nơi trong Cần Thơ.
+                           Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br /> LearnCode nơi cung cấp tri thức trẻ cho mọi người!
                         </Typography>
                     </Grid>
 
