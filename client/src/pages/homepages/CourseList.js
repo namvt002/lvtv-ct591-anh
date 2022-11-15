@@ -46,7 +46,7 @@ export default function CourseList() {
     return <>
         <Grid container spacing={3} sx={{paddingX: '10rem', paddingTop: '2rem'}}>
             {courses.map((course) => {
-                const {kh_id, kh_makh, kh_ten, kh_mota, kh_code, kh_code_lang, num_bkt} = course;
+                const {kh_id, kh_makh, kh_ten, kh_mota, kh_code, kh_code_lang, num_bkt, kh_code_run} = course;
                 console.log(num_bkt > 0)
                 return (
                     <Grid item xs={12}>
@@ -56,14 +56,15 @@ export default function CourseList() {
                                     <Typography variant='h3' align='center'>{kh_ten}</Typography>
                                     <Box my={4} dangerouslySetInnerHTML={{__html: kh_mota}}/>
                                     <Stack spacing={4}>
-                                        <Button variant='contained' color='info' sx={{width: '20rem'}} onClick={()=>{
+                                        <Button variant='contained' color='info' sx={{width: '20rem'}} onClick={() => {
                                             navigate(PATH_PAGE.course_content + `/${kh_makh}`);
                                         }}>
                                             Học {kh_ten}
                                         </Button>
-                                        <Button onClick={()=>{
+                                        <Button onClick={() => {
                                             navigate(PATH_PAGE.certificate + `/${kh_makh}`)
-                                        }} variant='contained' disabled={num_bkt === 0} color='warning' sx={{width: '20rem'}}>
+                                        }} variant='contained' disabled={num_bkt === 0} color='warning'
+                                                sx={{width: '20rem'}}>
                                             Lấy chứng chỉ
                                         </Button>
                                     </Stack>
@@ -71,7 +72,7 @@ export default function CourseList() {
                                 <Grid item xs={6} md={6}>
                                     <Box>
                                         <Code code={kh_code} language={kh_code_lang}/>
-                                        <Button variant='contained' onClick={() => {
+                                        {!!kh_code_run && <Button variant='contained' onClick={() => {
                                             dispatch(runCode({
                                                 code: kh_code,
                                                 lang: kh_code_lang
@@ -79,7 +80,7 @@ export default function CourseList() {
                                             navigate(PATH_PAGE.code)
                                         }} sx={{width: '20rem'}}>
                                             Chạy thử
-                                        </Button>
+                                        </Button>}
                                     </Box>
                                 </Grid>
                             </Grid>
