@@ -46,7 +46,8 @@ export default function CourseList() {
     return <>
         <Grid container spacing={3} sx={{paddingX: '10rem', paddingTop: '2rem'}}>
             {courses.map((course) => {
-                const {kh_id, kh_makh, kh_ten, kh_mota, kh_code, kh_code_lang} = course;
+                const {kh_id, kh_makh, kh_ten, kh_mota, kh_code, kh_code_lang, num_bkt} = course;
+                console.log(num_bkt > 0)
                 return (
                     <Grid item xs={12}>
                         <Card sx={{p: 4, minHeight: '80vh', backgroundColor: colorHome[randomIntFromInterval(0, 4)]}}>
@@ -60,7 +61,9 @@ export default function CourseList() {
                                         }}>
                                             Học {kh_ten}
                                         </Button>
-                                        <Button variant='contained' color='warning' sx={{width: '20rem'}}>
+                                        <Button onClick={()=>{
+                                            navigate(PATH_PAGE.certificate + `/${kh_makh}`)
+                                        }} variant='contained' disabled={num_bkt === 0} color='warning' sx={{width: '20rem'}}>
                                             Lấy chứng chỉ
                                         </Button>
                                     </Stack>

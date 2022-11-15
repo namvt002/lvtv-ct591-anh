@@ -26,7 +26,8 @@ export const PATH_PAGE = {
     shopcart: '/shopcart',
     productDetail: '/product-detail',
     code: '/run-code',
-    course_content: '/course-content'
+    course_content: '/course-content',
+    certificate: '/certificate'
 
 };
 
@@ -47,6 +48,10 @@ export const PATH_DASHBOARD = {
     lesson: {
         root: path(ROOTS_DASHBOARD, '/lesson'),
         new: path(ROOTS_DASHBOARD, '/lesson/new')
+    },
+    question: {
+        root: path(ROOTS_DASHBOARD, '/question'),
+        new: path(ROOTS_DASHBOARD, '/question/new')
     }
 
 };

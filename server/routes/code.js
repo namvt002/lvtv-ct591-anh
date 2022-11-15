@@ -1,6 +1,7 @@
 let path = require('path');
 const fs = require('fs');
 const {PythonShell} = require('python-shell');
+const { spawn } = require("child_process");
 
 module.exports = function (app) {
 
@@ -11,7 +12,6 @@ module.exports = function (app) {
 
     app.post('/api-v1/runcode', async (req, res) => {
         const {code, lang, id} = req.body;
-        console.log(lang)
         if (lang === 'html' || lang === 'javascript' || lang === 'css') {
             console.log(lang)
             try {

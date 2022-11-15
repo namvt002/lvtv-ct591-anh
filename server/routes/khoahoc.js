@@ -122,7 +122,21 @@ module.exports = function (app) {
             _qr += `WHERE kh_makh like '%${search}%' OR kh_ten like '%${search}%' OR bh_ten like '%${search}%'`
         }
         return res.status(200).send(await query(db, _qr));
-    })
+    });
+
+    app.put('/api/baihoc-active', async (req, res) => {
+        const {id, active, arrID} = req.body;
+        const qr = "UPDATE bai_hoc SET active = ? where bh_id = ?";
+        if (!!arrID) {
+            let _arrID = JSON.parse(arrID);
+            await Promise.all(
+                _arrID.map(async e => await query(db, qr, [active, e]))
+            )
+        } else {
+            await query(db, qr, [active, id]);
+        }
+        return res.status(200).send("Cập nhật thành công");
+    });
 
     app.get("/api/noidungbaihoc/:id", async (req, res) => {
         const bai_hoc = await query(db, `SELECT
@@ -148,9 +162,16 @@ module.exports = function (app) {
     // ###################################################################################################
 
     app.get("/api-v1/khoahoc", async (req, res) => {
-        let _qr = `SELECT * FROM khoa_hoc WHERE active = 1 `
+        let _qr = `SELECT
+                        khoa_hoc.*,
+                    IFNULL( SUM(bai_kiem_tra.bkt_active),0) num_bkt
+                    FROM
+                        khoa_hoc LEFT JOIN bai_kiem_tra ON bai_kiem_tra.bkt_idkh = khoa_hoc.kh_id
+                    WHERE
+                        active = 1`
         const {search} = req.query;
         if (search) _qr += `AND (kh_makh like '%${search}%' OR kh_ten like '%${search}%' or kh_create_at like '%${search}%')`;
+        _qr += ` GROUP BY khoa_hoc.kh_id`;
         return res.status(200).send(await query(db, _qr));
     });
 

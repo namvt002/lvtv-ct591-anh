@@ -16,7 +16,8 @@ const ICONS = {
     user        : getIcon('ic_user'),
     store       : getIcon('ic_store'),
     course      : getIcon('ic_course'),
-    lesson      : getIcon('ic_lesson')
+    lesson      : getIcon('ic_lesson'),
+    question    : getIcon('ic_question')
 };
 
 const sidebarConfig = [
@@ -42,6 +43,10 @@ const sidebarConfig = [
                 title   : 'Bài học',
                 path    : PATH_DASHBOARD.lesson.root,
                 icon    : ICONS.lesson
+            }, {
+                title   : 'Bài kiểm tra',
+                path    : PATH_DASHBOARD.question.root,
+                icon    : ICONS.question
             }],
     },
 ];

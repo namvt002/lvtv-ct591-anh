@@ -1,7 +1,6 @@
 import HeaderBreadcrumbs from "../../components/HeaderBreadcrumbs";
 import {PATH_DASHBOARD} from "../../routes/paths";
 import {
-    Avatar,
     Button,
     Card,
     Checkbox,
@@ -11,7 +10,8 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableContainer, TablePagination,
+    TableContainer,
+    TablePagination,
     TableRow,
     Typography
 } from "@material-ui/core";
@@ -20,27 +20,27 @@ import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import Page from "../../components/Page";
 import {useEffect, useState} from "react";
-import {API_BASE_URL, URL_PUBLIC_IMAGES} from "../../config/configUrl";
+import {API_BASE_URL} from "../../config/configUrl";
 import {getData, putData} from "../../_helper/httpProvider";
 import Scrollbar from "../../components/Scrollbar";
 import {MIconButton} from "../../components/@material-extend";
 import {useSnackbar} from "notistack5";
 import closeFill from "@iconify/icons-eva/close-fill";
-import {formatDateTime} from "../../_helper/formatDate";
 import SearchNotFound from "../../components/SearchNotFound";
 import LessonToolbar from "../../components/_dashboard/lesson/list/LessonToolbar";
 import LessonHead from "../../components/_dashboard/lesson/list/LessonHead";
-import LessonMoreMenu from "../../components/_dashboard/lesson/list/LessonMoreMenu";
+import QuestionMoreMenu from "../../components/_dashboard/question/list/QuestionMoreMenu";
 
 //-----------------------------------------------------------------------------------------------
 const TABLE_HEAD = [
     {id: 'makh', label: 'Mã khóa học', alignRight: false},
     {id: 'tenkh', label: 'Tên khóa học', alignRight: false},
-    {id: 'kh_ngaytao', label: 'Bài học', alignRight: false},
-    {id: 'kh_trang thai', label: 'Trạng thái', alignRight: false},
+    {id: 'bkt_ten', label: 'Tên bài kiểm tra', alignRight: false},
+    {id: 'bkt_thoigian', label: 'Thời gian', alignRight: false},
+    {id: 'bkt_active', label: 'Trạng thái', alignRight: false},
     {id: ''},
 ];
-export default function Lesson() {
+export default function Question() {
 
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
@@ -55,7 +55,7 @@ export default function Lesson() {
 
     useEffect(() => {
         (async () => {
-            const _res = await getData(API_BASE_URL + `/api/baihoc?search=${filterName}`);
+            const _res = await getData(API_BASE_URL + `/api/baikiemtra?search=${filterName}`);
             setLesson(_res.data);
         })()
     }, [load, filterName])
@@ -63,7 +63,7 @@ export default function Lesson() {
     // function
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = Lessons.map((n) => n.bh_id);
+            const newSelecteds = Lessons.map((n) => n.bkt_id);
             setSelected(newSelecteds);
             return;
         }
@@ -102,7 +102,7 @@ export default function Lesson() {
 
     const changeActive = async (id, active) => {
         try {
-            const res = await putData(API_BASE_URL + '/api/baihoc-active', {
+            const res = await putData(API_BASE_URL + '/api/baikiemtra-active', {
                 id: id,
                 active: active,
             });
@@ -127,23 +127,23 @@ export default function Lesson() {
 
 
     return <>
-        <Page title="Khóa học">
+        <Page title="Bài kiểm tra">
             <Container>
                 <HeaderBreadcrumbs
-                    heading="Bài học"
+                    heading="Bài kiểm tra"
                     links={[
                         {name: 'Quản lý', href: PATH_DASHBOARD.root},
-                        {name: 'Bài học', href: PATH_DASHBOARD.lesson.root},
-                        {name: 'Danh sách'},
+                        {name: 'Câu hỏi', href: PATH_DASHBOARD.question.root},
+                        {name: 'Bài kiểm tra'},
                     ]}
                     action={
                         <Button
                             variant="contained"
                             component={RouterLink}
-                            to={PATH_DASHBOARD.lesson.new}
+                            to={PATH_DASHBOARD.question.new}
                             startIcon={<Icon icon={plusFill}/>}
                         >
-                            Bài học mới
+                            Bài kiểm tra mới
                         </Button>
                     }
                 />
@@ -171,20 +171,18 @@ export default function Lesson() {
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                             const {
-                                                kh_id,
                                                 kh_makh,
-                                                kh_hinhanh,
                                                 kh_ten,
-                                                bh_ten,
-                                                bh_id,
-                                                active,
-                                                bh_active
+                                                bkt_id,
+                                                bkt_ten,
+                                                bkt_thoigian,
+                                                bkt_active
                                             } = row;
-                                            const isItemSelected = selected.indexOf(bh_id) !== -1;
+                                            const isItemSelected = selected.indexOf(bkt_id) !== -1;
                                             return (
                                                 <TableRow
                                                     hover
-                                                    key={bh_id}
+                                                    key={bkt_id}
                                                     tabIndex={-1}
                                                     role="checkbox"
                                                     selected={isItemSelected}
@@ -193,7 +191,7 @@ export default function Lesson() {
                                                     <TableCell padding="checkbox">
                                                         <Checkbox
                                                             checked={isItemSelected}
-                                                            onChange={(event) => handleClick(event, bh_id)}
+                                                            onChange={(event) => handleClick(event, bkt_id)}
                                                         />
                                                     </TableCell>
                                                     <TableCell component="th" scope="row" padding="none">
@@ -208,36 +206,26 @@ export default function Lesson() {
                                                         </Stack>
                                                     </TableCell>
                                                     <TableCell align="left">
-                                                        <Stack
-                                                            direction="row"
-                                                            alignItems="center"
-                                                            spacing={2}
-                                                        >
-                                                            <Avatar
-                                                                variant="square"
-                                                                alt={kh_makh}
-                                                                sx={{mr: 1}}
-                                                                src={`${
-                                                                    URL_PUBLIC_IMAGES + kh_hinhanh
-                                                                }`}
-                                                            />
-                                                            {kh_ten}
-                                                        </Stack>
+                                                        {kh_ten}
                                                     </TableCell>
                                                     <TableCell>
-                                                        <Typography>{bh_ten}</Typography>
+                                                        <Typography>{bkt_ten}</Typography>
                                                     </TableCell>
                                                     <TableCell align="left">
+                                                        {bkt_thoigian}
+                                                    </TableCell>
+
+                                                    <TableCell align="left">
                                                         <Switch
-                                                            checked={bh_active === 1}
+                                                            checked={bkt_active === 1}
                                                             onChange={() => {
-                                                                changeActive(bh_id, !bh_active);
+                                                                changeActive(bkt_id, !bkt_active);
                                                             }}
                                                         />
                                                     </TableCell>
 
                                                     <TableCell align="right">
-                                                        <LessonMoreMenu id={bh_id}/>
+                                                        <QuestionMoreMenu id={bkt_id}/>
                                                     </TableCell>
                                                 </TableRow>
                                             );

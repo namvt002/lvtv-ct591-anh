@@ -103,6 +103,20 @@ export default function Router() {
                         }]
                 },
                 {
+                    path: 'question',
+                    children: [{
+                        path: '',
+                        element: <Question/>,
+                    },
+                        {
+                            path: 'new',
+                            element: <QuestionCreate/>
+                        }, {
+                            path: ':id/edit',
+                            element: <QuestionCreate/>
+                        }]
+                },
+                {
                     path: 'store',
                     element: <Store/>
                 }
@@ -137,8 +151,10 @@ export default function Router() {
             },{
                 path: 'course-content/:id',
                 element: <CourseContent />
-            }
-            ]
+            },{
+                path: 'certificate/:id',
+                element: <Certificate />
+            }]
         },
         {path: '*', element: <Navigate to="/404" replace/>},
     ]);
@@ -176,5 +192,10 @@ const CourseContent  = Loadable(lazy(()=> import('../pages/homepages/CourseConte
 
 const Lesson = Loadable(lazy(() => import('../pages/dashboard/Lesson')))
 const LessonCreate = Loadable(lazy(() => import('../pages/dashboard/LessonCreate')))
+
+const Question = Loadable(lazy(() => import('../pages/dashboard/Question')))
+const QuestionCreate = Loadable(lazy(() => import('../pages/dashboard/QuestionCreate')))
+
+const Certificate = Loadable(lazy(()=>import('../pages/homepages/Certificate')))
 
 const RunCode = Loadable(lazy(() => import('../pages/homepages/RunCode')))
