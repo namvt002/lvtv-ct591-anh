@@ -28,7 +28,7 @@ export default function UserListHead({
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
-    const isAdmin = !!useSelector(state => state.user.current.role) === "ADMIN";
+    const isAdmin = !!useSelector(state => state.user.current?.role) === "ADMIN";
 
     return (
         <TableHead>

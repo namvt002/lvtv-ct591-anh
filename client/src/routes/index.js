@@ -70,6 +70,8 @@ export default function Router() {
                             element: <UserList/>,
                         },
                         {path: 'list', element: <UserList/>},
+                        {path: 'new', element: <UserCreate/>},
+                        {path: ':id/edit', element: <UserCreate/>},
                     ],
                 },
                 {
@@ -178,6 +180,10 @@ const ChangePassword = Loadable(lazy(() => import('../pages/authentication/Chang
 const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
 //--------------------------------user------------------------------
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
+
+const UserCreate = Loadable(
+    lazy(() => import('../pages/dashboard/UserCreate')),
+);
 
 const Profile = Loadable(lazy(() => import('../pages/homepages/Profile')))
 

@@ -1,10 +1,10 @@
 import {Icon} from '@iconify/react';
 import {useEffect, useState} from 'react';
-// import plusFill from '@iconify/icons-eva/plus-fill';
-// import {Link as RouterLink} from 'react-router-dom';
+import plusFill from '@iconify/icons-eva/plus-fill';
+import {Link as RouterLink} from 'react-router-dom';
 // material
 import {
-    // Button,
+    Button,
     Card,
     Checkbox,
     Container,
@@ -27,7 +27,7 @@ import Page from '../../components/Page';
 import Scrollbar from '../../components/Scrollbar';
 import SearchNotFound from '../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import {UserListHead, UserListToolbar} from '../../components/_dashboard/user/list';
+import {UserListHead, UserListToolbar, UserMoreMenu,} from '../../components/_dashboard/user/list';
 import {getData, postData} from '../../_helper/httpProvider';
 import {API_BASE_URL} from '../../config/configUrl';
 import {useSnackbar} from 'notistack5';
@@ -44,6 +44,7 @@ const TABLE_HEAD = [
     {id: 'role', label: 'Quyền', alignRight: false},
     {id: 'isVerified', label: 'Xác minh tài khoản', alignRight: false},
     {id: 'status', label: 'Trạng thái', alignRight: false},
+    {id: ''},
 ];
 
 
@@ -60,7 +61,7 @@ export default function UserList() {
     const [users, setUsers] = useState([]);
     const [load, setLoad] = useState(0);
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
-    const isAdmin = useSelector(state => state.user.current.role) === "ADMIN";
+    const isAdmin = useSelector(state => state.user.current?.role) === "ADMIN";
 
 
     useEffect(() => {
@@ -145,7 +146,7 @@ export default function UserList() {
         }
     };
     return (
-        <Page title="Users">
+        <Page title="User: List | LearnCode">
             <Container maxWidth={themeStretch ? false : 'lg'}>
                 <HeaderBreadcrumbs
                     heading="Danh sách người dùng"
@@ -154,6 +155,16 @@ export default function UserList() {
                         {name: 'Người dùng', href: PATH_DASHBOARD.user.list},
                         {name: 'Danh sách'},
                     ]}
+                    action={
+                        isAdmin && <Button
+                            variant="contained"
+                            component={RouterLink}
+                            to={PATH_DASHBOARD.user.new}
+                            startIcon={<Icon icon={plusFill}/>}
+                        >
+                            Thêm tài khoản
+                        </Button>
+                    }
                 />
 
                 <Card>
@@ -232,6 +243,10 @@ export default function UserList() {
                                                         {!isAdmin && <Typography>
                                                             {active ? 'Hiện' : 'Ần'}
                                                         </Typography>}
+                                                    </TableCell>
+
+                                                    <TableCell align="right">
+                                                        {isAdmin && <UserMoreMenu id={id}/>}
                                                     </TableCell>
                                                 </TableRow>
                                             );
