@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { LoadingButton } from '@material-ui/lab';
 import { alpha, styled } from '@material-ui/core/styles';
 import { Box, Button, Container, Typography, DialogActions } from '@material-ui/core';
-
 import { DialogAnimate } from 'src/components/animate';
 import Markdown from 'src/components/Markdown';
 import Scrollbar from 'src/components/Scrollbar';
 import EmptyContent from 'src/components/EmptyContent';
-
+//
+// import Markdown from '../../Markdown';
+// import Scrollbar from '../../Scrollbar';
+// import EmptyContent from '../../EmptyContent';
 
 // ----------------------------------------------------------------------
 
@@ -32,13 +34,13 @@ const HeroStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 PreviewHero.propTypes = {
-  title: PropTypes.string,
-  cover: PropTypes.string
+  bv_tieude: PropTypes.string,
+  bv_anh: PropTypes.string
 };
 
-function PreviewHero({ title, cover }) {
+function PreviewHero({ bv_tieude, bv_anh }) {
   return (
-    <HeroStyle sx={{ backgroundImage: `url(${cover})` }}>
+    <HeroStyle sx={{ backgroundImage: `url(${bv_anh})` }}>
       <Container
         sx={{
           top: 0,
@@ -51,7 +53,7 @@ function PreviewHero({ title, cover }) {
         }}
       >
         <Typography variant="h2" component="h1">
-          {title}
+          {bv_tieude}
         </Typography>
       </Container>
     </HeroStyle>
@@ -66,18 +68,18 @@ BlogNewPostPreview.propTypes = {
 
 export default function BlogNewPostPreview({ formik, openPreview, onClosePreview }) {
   const { values, handleSubmit, isSubmitting, isValid } = formik;
-  const { title, description, content } = values;
-  const cover = isString(values.cover) ? values.cover : values.cover?.preview;
-  const hasContent = title || description || content || cover;
-  const hasHero = title || cover;
+  const { bv_tieude, bv_mota, bv_noidung } = values;
+  const bv_anh = isString(values.bv_anh) ? values.bv_anh : values.bv_anh?.preview;
+  const hasContent = bv_tieude || bv_mota || bv_noidung || bv_anh;
+  const hasHero = bv_tieude || bv_anh;
 
   return (
     <DialogAnimate fullScreen open={openPreview} onClose={onClosePreview}>
       <DialogActions sx={{ py: 2, px: 3 }}>
         <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
-          Preview Post
+          Xem trước bài viết
         </Typography>
-        <Button onClick={onClosePreview}>Cancel</Button>
+        <Button onClick={onClosePreview}>Hủy</Button>
         <LoadingButton
           type="submit"
           variant="contained"
@@ -91,18 +93,18 @@ export default function BlogNewPostPreview({ formik, openPreview, onClosePreview
 
       {hasContent ? (
         <Scrollbar>
-          {hasHero && <PreviewHero title={title} cover={cover} />}
+          {hasHero && <PreviewHero bv_tieude={bv_tieude} bv_anh={bv_anh} />}
           <Container>
             <Box sx={{ mt: 5, mb: 10 }}>
               <Typography variant="h6" sx={{ mb: 5 }}>
-                {description}
+                {bv_mota}
               </Typography>
-              <Markdown children={content} />
+              <Markdown children={bv_noidung} />
             </Box>
           </Container>
         </Scrollbar>
       ) : (
-        <EmptyContent title="Empty content" />
+        <EmptyContent title="Không có nội dụng" />
       )}
     </DialogAnimate>
   );

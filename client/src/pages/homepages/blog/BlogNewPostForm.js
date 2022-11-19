@@ -27,6 +27,9 @@ import BlogNewPostPreview from './BlogNewPostPreview';
 import { QuillEditor } from 'src/components/editor';
 import { UploadSingleFile } from 'src/components/upload';
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs';
+import { postData } from 'src/_helper/httpProvider';
+import { API_BASE_URL } from 'src/config/configUrl';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -57,6 +60,7 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
 export default function BlogNewPostForm() {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
+  const userId = useSelector(state => state.user.current?.id);
 
   const handleOpenPreview = () => {
     setOpen(true);
@@ -74,6 +78,7 @@ export default function BlogNewPostForm() {
   });
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       bv_tieude: '',
       bv_mota: '',
@@ -87,14 +92,17 @@ export default function BlogNewPostForm() {
       try {
 
         const formDt = new FormData();
-        formDt.append('bv_hinh', values.bv_hinh.file);
-        formDt.append('bv_iduser', values.bv_hinh.file);
+        formDt.append('bv_anh', values.bv_anh.file);
+        formDt.append('bv_iduser', userId);
         formDt.append('data', JSON.stringify(values));
         // await fakeRequest(500);
-        resetForm();
-        handleClosePreview();
-        setSubmitting(false);
-        enqueueSnackbar('Post success', { variant: 'success' });
+        await postData(API_BASE_URL + '/api/baiviet', formDt, {
+          'content-type': 'multipart/form-data',
+        });
+        // resetForm();
+        // handleClosePreview();
+        // setSubmitting(false);
+        // enqueueSnackbar('Post success', { variant: 'success' });
       } catch (error) {
         console.error(error);
         setSubmitting(false);

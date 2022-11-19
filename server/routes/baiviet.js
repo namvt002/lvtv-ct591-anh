@@ -22,26 +22,29 @@ let upload = multer({
 });
 
 module.exports = function (app) {
-    app.get('/api/khoahoc', async (req, res) => {
-        let _qr = `SELECT * FROM khoa_hoc `
+    app.get('/api/baiviet', async (req, res) => {
+        let _qr = `SELECT * FROM bai_viet `
         const {search} = req.query;
-        if (search) _qr += `WHERE kh_makh like '%${search}%' OR kh_ten like '%${search}%' or kh_create_at like '%${search}%'`;
+        if (search) _qr += `WHERE bv_tieude like '%${search}%' OR bv_mota like '%${search}%' OR bv_noidung like '%${search}%'
+            OR 	bv_ngaytao like '%${search}%'
+        `;
         return res.status(200).send(await query(db, _qr));
     });
 
-    app.get('/api/khoahoc/:id', async (req, res) => {
-        return res.status(200).send(await query(db, `SELECT * FROM khoa_hoc WHERE kh_id = ?`, req.params.id));
+    app.get('/api/baiviet/:id', async (req, res) => {
+        return res.status(200).send(await query(db, `SELECT * FROM bai_viet WHERE kh_id = ?`, req.params.id));
     })
 
-    app.post('/api/khoahoc', upload.single("kh_hinhanh"), async (req, res) => {
-        let {data} = req.body;
+    app.post('/api/baiviet', upload.single("bv_anh"), async (req, res) => {
+        let {data, bv_iduser} = req.body;
         data = JSON.parse(data);
-        data.kh_hinhanh = req.file.filename;
-        await query(db, `INSERT INTO khoa_hoc SET ?`, data);
+        data.bv_anh = req.file.filename;
+        data.bv_iduser = bv_iduser;
+        await query(db, `INSERT INTO bai_viet SET ?`, data);
         return res.status(200).send("ok");
     });
 
-    app.put("/api/khoahoc/:id", upload.single("kh_hinhanh"), async (req, res) => {
+    app.put("/api/baiviet/:id", upload.single("kh_hinhanh"), async (req, res) => {
         const {id} = req.params;
         let {data} = req.body;
         data = JSON.parse(data);
@@ -50,7 +53,7 @@ module.exports = function (app) {
         await query(db, "UPDATE khoa_hoc SET ? WHERE kh_id = ?", [data, id]);
         return res.status(200).send("ok");
     })
-    app.put('/api/khoahoc-active', async (req, res) => {
+    app.put('/api/baiviet-active', async (req, res) => {
         const {id, active, arrID} = req.body;
         const qr = "UPDATE khoa_hoc SET active = ? where kh_id = ?";
         if (!!arrID) {
