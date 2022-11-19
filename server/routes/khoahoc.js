@@ -186,7 +186,7 @@ module.exports = function (app) {
                                             khoa_hoc.kh_makh = ?`, makh));
     });
 
-    app.get("/api-v1/baihoc/:id", async (req, res)=>{
+    app.get("/api-v1/baihoc/:id", async (req, res) => {
         const {id} = req.params;
         return res.status(200).send(await query(db, `SELECT
                                                             noi_dung_bai_hoc.*

@@ -16,7 +16,7 @@ import {PATH_PAGE} from "../../routes/paths";
 import {useState} from "react";
 import CheckoutListHead from "./CheckoutListHead";
 import CheckoutListToolbar from "./CheckoutListToolbar";
-import { checkoutProduct, setQuantityProductCheckout} from "../../redux/slices/product";
+import {checkoutProduct, setQuantityProductCheckout} from "../../redux/slices/product";
 
 // ----------------------------------------------------------------------
 
@@ -87,9 +87,9 @@ export default function ProductList({products}) {
         }
         let arr = [];
         newSelected.map(e1 => {
-           return arr.push( cart.filter((e,idx) => e.id_sp === e1)[0])
+            return arr.push(cart.filter((e, idx) => e.id_sp === e1)[0])
         })
-        dispatch( checkoutProduct(arr))
+        dispatch(checkoutProduct(arr))
         setSelected(newSelected);
     };
 

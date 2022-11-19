@@ -1,22 +1,21 @@
 import {useEffect, useState} from "react";
 import {getData} from "../../_helper/httpProvider";
 import {API_BASE_URL} from "../../config/configUrl";
-import {Box, Button, Stack, Typography} from "@material-ui/core";
-import {Icon} from "@iconify/react";
+import {Box, Button, Typography} from "@material-ui/core";
 import Code from "../../components/code/Code";
 import {runCode} from "../../redux/slices/code";
 import {PATH_PAGE} from "../../routes/paths";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
-export default function LessonContent({idbh}){
+export default function LessonContent({idbh}) {
     const [lessons, setLesson] = useState();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        (async  ()=>{
-            const res = await getData(API_BASE_URL + `/api-v1/baihoc/${idbh}` );
+    useEffect(() => {
+        (async () => {
+            const res = await getData(API_BASE_URL + `/api-v1/baihoc/${idbh}`);
             console.log(res.data)
             setLesson(res.data)
         })()
@@ -29,7 +28,7 @@ export default function LessonContent({idbh}){
                 <Typography variant='h6'>{e.ndbh_tieude}</Typography>
                 <Box dangerouslySetInnerHTML={{__html: e.ndbh_mota}}/>
                 <Box>
-                    { !!e.ndbh_code && <Code code={e.ndbh_code} language={e.ndbh_code_lang}/>}
+                    {!!e.ndbh_code && <Code code={e.ndbh_code} language={e.ndbh_code_lang}/>}
                 </Box>
                 {e.ndbh_code_run ? <Button variant='contained' onClick={() => {
                     dispatch(runCode({

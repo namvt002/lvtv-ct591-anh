@@ -7,7 +7,7 @@ import {API_BASE_URL} from "../../config/configUrl";
 import {postData} from "../../_helper/httpProvider";
 import arrowIosBackFill from "@iconify/icons-eva/arrow-ios-back-fill";
 import {useNavigate} from "react-router-dom";
-import { Icon } from '@iconify/react';
+import {Icon} from '@iconify/react';
 
 export default function RunCode() {
     const {code, lang, id} = useSelector(state => state.code);
@@ -61,7 +61,7 @@ export default function RunCode() {
                                 <Button
                                     color="inherit"
                                     startIcon={<Icon icon={arrowIosBackFill}/>}
-                                    onClick={()=> navigate(-1)}
+                                    onClick={() => navigate(-1)}
                                 >
                                     Trở lại
                                 </Button>
@@ -69,7 +69,7 @@ export default function RunCode() {
                             </Box>
                         </Grid>
                         <Grid item xs={6} md={6}>
-                            <Card sx={{p:2, height: '100%', width: '100%'}}>
+                            <Card sx={{p: 2, height: '100%', width: '100%'}}>
                                 <iframe
                                     key={load}
                                     style={{border: 'none', height: '100%', width: '100%'}}

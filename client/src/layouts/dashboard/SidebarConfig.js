@@ -13,11 +13,11 @@ const getIcon = (name) => (
 );
 
 const ICONS = {
-    user        : getIcon('ic_user'),
-    store       : getIcon('ic_store'),
-    course      : getIcon('ic_course'),
-    lesson      : getIcon('ic_lesson'),
-    question    : getIcon('ic_question')
+    user: getIcon('ic_user'),
+    store: getIcon('ic_store'),
+    course: getIcon('ic_course'),
+    lesson: getIcon('ic_lesson'),
+    question: getIcon('ic_question')
 };
 
 const sidebarConfig = [
@@ -25,28 +25,28 @@ const sidebarConfig = [
     {
         items: [
             {
-                title   : 'Thông tin trang web',
-                path    : PATH_DASHBOARD.store.root,
-                icon    : ICONS.store
+                title: 'Thông tin trang web',
+                path: PATH_DASHBOARD.store.root,
+                icon: ICONS.store
             },
             {
-                title   : 'user',
-                path    : PATH_DASHBOARD.user.list,
-                icon    : ICONS.user,
+                title: 'user',
+                path: PATH_DASHBOARD.user.list,
+                icon: ICONS.user,
             },
             {
-                title   : 'Khóa học',
-                path    : PATH_DASHBOARD.course.root,
-                icon    : ICONS.course,
+                title: 'Khóa học',
+                path: PATH_DASHBOARD.course.root,
+                icon: ICONS.course,
             },
             {
-                title   : 'Bài học',
-                path    : PATH_DASHBOARD.lesson.root,
-                icon    : ICONS.lesson
+                title: 'Bài học',
+                path: PATH_DASHBOARD.lesson.root,
+                icon: ICONS.lesson
             }, {
-                title   : 'Bài kiểm tra',
-                path    : PATH_DASHBOARD.question.root,
-                icon    : ICONS.question
+                title: 'Bài kiểm tra',
+                path: PATH_DASHBOARD.question.root,
+                icon: ICONS.question
             }],
     },
 ];

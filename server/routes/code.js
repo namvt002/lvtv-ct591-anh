@@ -1,7 +1,7 @@
 let path = require('path');
 const fs = require('fs');
 const {PythonShell} = require('python-shell');
-const { spawn } = require("child_process");
+const {spawn} = require("child_process");
 
 module.exports = function (app) {
 
@@ -41,7 +41,7 @@ module.exports = function (app) {
 
                 } else {
                     let dt = ''
-                        data.map(e=> dt += e + "\n");
+                    data.map(e => dt += e + "\n");
                     html = `
                     <!DOCTYPE html>
                         <html lang="en">

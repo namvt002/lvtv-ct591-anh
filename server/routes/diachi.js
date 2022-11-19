@@ -20,9 +20,9 @@ module.exports = function (app) {
         return res.status(200).send("Thêm thành công");
     });
 
-    app.delete('/diachi/:id', async (req, res)=>{
+    app.delete('/diachi/:id', async (req, res) => {
         const {id} = req.params;
-        if(!id) return res.status(500).send(null);
+        if (!id) return res.status(500).send(null);
         const _qr = 'UPDATE dia_chi SET active = 0 WHERE dc_id = ?';
         await query(db, _qr, id);
         return res.status(200).send("Xóa thành công!");

@@ -19,9 +19,9 @@ import {useDispatch} from "react-redux";
 
 export default function App() {
     const dispatch = useDispatch();
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getStore());
-    },[dispatch]);
+    }, [dispatch]);
 
     return (
         <ThemeConfig>

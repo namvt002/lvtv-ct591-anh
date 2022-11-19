@@ -24,9 +24,14 @@ export default function CourseContent() {
                 <Card sx={{p: 2}}>
                     <MenuList>
                         {lessons?.map((e, idx) => (
-                            <Box key={idx} >
-                                <MenuItem   onClick={() => setIdbh(e.bh_id)}>
-                                    < ListItemText sx={{backgroundColor: e.bh_id === idbh && '#F47F26', color:  e.bh_id === idbh &&  '#fff', borderRadius: e.bh_id === idbh &&  '5px', padding: 1}}>{e.bh_ten}</ListItemText>
+                            <Box key={idx}>
+                                <MenuItem onClick={() => setIdbh(e.bh_id)}>
+                                    < ListItemText sx={{
+                                        backgroundColor: e.bh_id === idbh && '#F47F26',
+                                        color: e.bh_id === idbh && '#fff',
+                                        borderRadius: e.bh_id === idbh && '5px',
+                                        padding: 1
+                                    }}>{e.bh_ten}</ListItemText>
                                 </MenuItem>
                                 <Divider/>
                             </Box>

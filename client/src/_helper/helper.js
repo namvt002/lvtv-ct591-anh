@@ -1,4 +1,4 @@
-import { replace } from 'lodash';
+import {replace} from 'lodash';
 import numeral from 'numeral';
 
 export function randomIntFromInterval(min, max) { // min and max included

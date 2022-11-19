@@ -32,6 +32,6 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 // Actions
-export const { login, logout} = slice.actions;
+export const {login, logout} = slice.actions;
 
 // ----------------------------------------------------------------------

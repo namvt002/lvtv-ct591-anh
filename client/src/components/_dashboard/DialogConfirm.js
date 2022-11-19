@@ -90,7 +90,7 @@ export default function DialogConfirm({
         validationSchema: Schema
     });
 
-    const huyDon = async () =>{
+    const huyDon = async () => {
         try {
             await putData(API_BASE_URL + `/hoadon/${idhd}`, {
                 tt_trangthai: 4,
@@ -134,7 +134,7 @@ export default function DialogConfirm({
                         <>
                             <FormikProvider value={formik}>
                                 <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                                    <Grid  alignItems='center' spacing={2} sx={{width: '40rem'}} container>
+                                    <Grid alignItems='center' spacing={2} sx={{width: '40rem'}} container>
                                         <Grid item md={8}>
                                             <Autocomplete
                                                 fullWidth
@@ -155,14 +155,15 @@ export default function DialogConfirm({
                                                 getOptionLabel={(option) => option.fullname || ''}
                                             />
                                         </Grid>
-                                        <Grid item md={4} >
+                                        <Grid item md={4}>
                                             <Button type="submit" variant='contained'>Xác nhận</Button>
                                         </Grid>
                                     </Grid>
 
                                 </Form>
                             </FormikProvider>
-                            {isAdmin && <Button  variant='contained' color='error' onClick={()=> huyDon()}>Hủy đơn</Button>}
+                            {isAdmin &&
+                                <Button variant='contained' color='error' onClick={() => huyDon()}>Hủy đơn</Button>}
                         </>
                     )}
 

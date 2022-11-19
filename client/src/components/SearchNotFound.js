@@ -15,7 +15,7 @@ export default function SearchNotFound({searchQuery = '', ...other}) {
                 Không tìm thấy
             </Typography>
             <Typography variant="body2" align="center">
-               Không có kết quả nào cho &nbsp;
+                Không có kết quả nào cho &nbsp;
                 <strong>&quot;{searchQuery}&quot;</strong>. Vui lòng kiểm tra lại!.
             </Typography>
         </Paper>

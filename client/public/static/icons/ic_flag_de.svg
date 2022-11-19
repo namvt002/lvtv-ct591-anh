@@ -1,5 +1,5 @@
-<svg height="20" viewBox="0 0 28 20" width="28" xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" height="20" viewBox="0 0 28 20" width="28"
+     xmlns="http://www.w3.org/2000/svg">
     <defs>
         <path id="a" d="m0 6.667h28v6.667h-28z"/>
         <filter id="b" height="145%" width="110.7%" x="-5.4%" y="-22.5%">

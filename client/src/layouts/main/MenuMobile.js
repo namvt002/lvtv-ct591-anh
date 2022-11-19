@@ -200,7 +200,7 @@ export default function MenuMobile({isOffset, isHome}) {
                     </Link>
 
                     <List disablePadding>
-                        {menuConfig.map((link,idx) => (
+                        {menuConfig.map((link, idx) => (
                             <MenuMobileItem
                                 key={idx}
                                 item={link}

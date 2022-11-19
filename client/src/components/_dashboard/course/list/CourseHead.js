@@ -16,14 +16,14 @@ CourseHead.propTypes = {
 };
 
 export default function CourseHead({
-                                            order,
-                                            orderBy,
-                                            rowCount,
-                                            headLabel,
-                                            numSelected,
-                                            onRequestSort,
-                                            onSelectAllClick,
-                                        }) {
+                                       order,
+                                       orderBy,
+                                       rowCount,
+                                       headLabel,
+                                       numSelected,
+                                       onRequestSort,
+                                       onSelectAllClick,
+                                   }) {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };

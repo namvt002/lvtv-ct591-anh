@@ -129,7 +129,7 @@ export default function ProductDetailsSumary(props) {
         });
         if (CartItemQuantity?.id_sp) dispatch(setQuantity({
             id_sp: sp_id,
-            so_luong: (values.quantity + CartItemQuantity.so_luong > gb_soluong ) ? gb_soluong :  (values.quantity + CartItemQuantity.so_luong),
+            so_luong: (values.quantity + CartItemQuantity.so_luong > gb_soluong) ? gb_soluong : (values.quantity + CartItemQuantity.so_luong),
         }))
 
         else dispatch(addToCart({

@@ -109,8 +109,8 @@ export default function LessonNewForm({isEdit, current}) {
             bh_mota: '',
             bh_tieude: '',
             bh_code: '',
-            active:  true,
-            bh_active:  false,
+            active: true,
+            bh_active: false,
             bh_lang: '',
             bh_idndbh: ''
         },
@@ -127,11 +127,11 @@ export default function LessonNewForm({isEdit, current}) {
                     ),
                 });
                 let _values = {...values};
-                if(isEdit){
+                if (isEdit) {
                     delete _values.ndbh_id;
                     _values.bai_hoc = lesson;
                     await putData(API_BASE_URL + `/api/baihoc/${current.bh_id}`, _values);
-                }else{
+                } else {
                     _values.bai_hoc = lesson;
                     await postData(API_BASE_URL + '/api/baihoc', _values);
                 }

@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react';
 // import {Link as RouterLink} from 'react-router-dom';
 // material
 import {
-    // Button,
     Card,
     Checkbox,
     Container,
@@ -200,7 +199,7 @@ export default function UserList() {
                                                     aria-checked={isItemSelected}
                                                 >
                                                     <TableCell padding="checkbox">
-                                                        {isAdmin &&  <Checkbox
+                                                        {isAdmin && <Checkbox
                                                             checked={isItemSelected}
                                                             onChange={(event) => handleClick(event, id)}
                                                         />}

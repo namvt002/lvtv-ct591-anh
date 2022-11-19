@@ -138,7 +138,7 @@ export default function QuestionNewForm({isEdit, current}) {
                     await putData(API_BASE_URL + `/api/baikiemtra/${current.baikiemtra.bkt_id}`, data);
                 } else {
                     _values.bai_hoc = question;
-                   await postData(API_BASE_URL + '/api/baikiemtra', data);
+                    await postData(API_BASE_URL + '/api/baikiemtra', data);
                 }
                 enqueueSnackbar(isEdit ? 'Cập nhật thành công' : 'Thêm thành công!', {
                     variant: 'success',
@@ -237,7 +237,7 @@ export default function QuestionNewForm({isEdit, current}) {
         setFieldValue('ch_loaicauhoi', value.ch_loaicauhoi);
         if (value.ch_loaicauhoi.id === 'mot') {
             setFieldValue('ch_dapandung', value.ch_dapandung);
-        }else{
+        } else {
             setFieldValue('ch_dapannhieu', value.ch_dapandung);
         }
         setFieldValue('ch_dapan', value.ch_dapan);

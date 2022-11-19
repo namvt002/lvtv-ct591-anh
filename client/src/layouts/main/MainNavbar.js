@@ -9,7 +9,7 @@ import Logo from '../../components/Logo';
 //
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
-import { useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 // import {PATH_PAGE} from "../../routes/paths";
 
 // ----------------------------------------------------------------------
@@ -76,9 +76,9 @@ export default function MainNavbar() {
                     </Typography>
                     <Box sx={{flexGrow: 1}}/>
                     <Box mx={2}>
-                        <Searchbar />
+                        <Searchbar/>
                     </Box>
-                   
+
                     {isLogined ? (
                         <AccountPopover/>
                     ) : (

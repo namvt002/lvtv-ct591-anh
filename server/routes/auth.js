@@ -126,7 +126,7 @@ module.exports = function (app) {
                 if (data.length !== 0) {
                     res.cookie("token", token, {expire: new Date() + 86400});
                     res.cookie("user", JSON.stringify(data[0]));
-                    if(data[0].role === 'ADMIN') return res.redirect("http://localhost:3000/dashboard");
+                    if (data[0].role === 'ADMIN') return res.redirect("http://localhost:3000/dashboard");
                     return res.redirect("http://localhost:3000");
                 } else {
                     let sql =

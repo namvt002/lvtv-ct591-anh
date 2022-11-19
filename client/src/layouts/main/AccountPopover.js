@@ -102,7 +102,7 @@ export default function AccountPopover() {
                     Thông tin tài khoản
                 </MenuItem>
 
-                {(isAdmin || isEmployee )&& (
+                {(isAdmin || isEmployee) && (
                     <MenuItem
                         to={PATH_DASHBOARD.root}
                         component={RouterLink}

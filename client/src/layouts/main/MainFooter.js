@@ -29,7 +29,7 @@ const LINKS = [
             {name: 'Chính sách vận chuyển', href: '#'},
             {name: 'Chính sách bán sỉ', href: '#'},
             {name: 'Phương thức thanh toán', href: '#'},
-            
+
         ]
     },
     {
@@ -66,7 +66,8 @@ export default function MainFooter() {
                     </Grid>
                     <Grid item xs={8} md={3}>
                         <Typography variant="body2" sx={{pr: {md: 5}}}>
-                           Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br /> Nhà sách HYBE nhận đặt hàng trực tuyến và giao hàng tận
+                            Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br/> Nhà sách HYBE nhận đặt hàng trực tuyến và
+                            giao hàng tận
                             nơi trong Cần Thơ.
                         </Typography>
                     </Grid>

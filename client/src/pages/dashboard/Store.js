@@ -76,7 +76,7 @@ export default function Store() {
                                         </Typography>
                                         <Typography variant="subtitle2">{store.ch_email}</Typography>
                                     </Stack>
-                                    {isAdmin && <Stack direction="row" justifyContent="end" sx={{m:'2rem 0'}}>
+                                    {isAdmin && <Stack direction="row" justifyContent="end" sx={{m: '2rem 0'}}>
                                         {!isEdit && <Button variant='contained' onClick={() => setEdit(true)}>
                                             Chỉnh sửa
                                         </Button>}
