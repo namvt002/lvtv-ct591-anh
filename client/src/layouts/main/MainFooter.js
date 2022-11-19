@@ -24,17 +24,8 @@ const LINKS = [
     {
         headline: 'Hỗ trợ',
         children: [
-<<<<<<< HEAD
-            {name: 'Chính sách đổi - trả - hoàn tiền', href: '#'},
-            {name: 'Chính sách bảo hành- bồi hoàn', href: '#'},
-            {name: 'Chính sách vận chuyển', href: '#'},
-            {name: 'Chính sách bán sỉ', href: '#'},
-            {name: 'Phương thức thanh toán', href: '#'},
-
-=======
             {name: 'Quên mật khẩu', href: '#'},
             {name: 'Đổi mật khẩu', href: '#'},            
->>>>>>> 6587304cec154a5ae13e14ae9b06c8573dca3e21
         ]
     },
     {
@@ -70,13 +61,7 @@ export default function MainFooter() {
                     </Grid>
                     <Grid item xs={8} md={3}>
                         <Typography variant="body2" sx={{pr: {md: 5}}}>
-<<<<<<< HEAD
-                            Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br/> Nhà sách HYBE nhận đặt hàng trực tuyến và
-                            giao hàng tận
-                            nơi trong Cần Thơ.
-=======
                            Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br /> LearnCode nơi cung cấp tri thức trẻ cho mọi người!
->>>>>>> 6587304cec154a5ae13e14ae9b06c8573dca3e21
                         </Typography>
                     </Grid>
 

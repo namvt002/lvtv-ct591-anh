@@ -151,6 +151,19 @@ export default function Router() {
                 path: 'run-code',
                 element: <RunCode/>
             }, {
+                path: 'blog',
+                children: [{
+                    path: '',
+                    element: <BlogPosts/>,
+                },
+                    {
+                        path: 'new',
+                        element: <BlogNewPostForm/>
+                    }, {
+                        path: ':id/edit',
+                        element: <BlogNewPostForm/>
+                    }]
+            }, {
                 path: 'course-content/:id',
                 element: <CourseContent/>
             }, {
@@ -186,6 +199,11 @@ const UserCreate = Loadable(
 );
 
 const Profile = Loadable(lazy(() => import('../pages/homepages/Profile')))
+//--------------------------------blog------------------------------
+
+const BlogNewPostForm = Loadable(lazy(() => import('../pages/homepages/blog/BlogNewPostForm')))
+const BlogPosts = Loadable(lazy(() => import('../pages/homepages/blog/BlogPosts')))
+
 
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));

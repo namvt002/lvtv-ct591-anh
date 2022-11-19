@@ -27,7 +27,9 @@ export const PATH_PAGE = {
     productDetail: '/product-detail',
     code: '/run-code',
     course_content: '/course-content',
-    certificate: '/certificate'
+    certificate: '/certificate',
+    blog: '/blog',
+    blogNew: '/blog/new',
 
 };
 
@@ -53,6 +55,7 @@ export const PATH_DASHBOARD = {
     question: {
         root: path(ROOTS_DASHBOARD, '/question'),
         new: path(ROOTS_DASHBOARD, '/question/new')
-    }
+    }, 
+   
 
 };

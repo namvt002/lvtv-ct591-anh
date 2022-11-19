@@ -4,10 +4,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import {Link as RouterLink} from 'react-router-dom';
 // material
 import {
-<<<<<<< HEAD
-=======
     Button,
->>>>>>> 6587304cec154a5ae13e14ae9b06c8573dca3e21
     Card,
     Checkbox,
     Container,

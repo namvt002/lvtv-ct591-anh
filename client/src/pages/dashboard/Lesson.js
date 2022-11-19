@@ -27,10 +27,7 @@ import Scrollbar from "../../components/Scrollbar";
 import {MIconButton} from "../../components/@material-extend";
 import {useSnackbar} from "notistack5";
 import closeFill from "@iconify/icons-eva/close-fill";
-<<<<<<< HEAD
-=======
 // import {formatDateTime} from "../../_helper/formatDate";
->>>>>>> 6587304cec154a5ae13e14ae9b06c8573dca3e21
 import SearchNotFound from "../../components/SearchNotFound";
 import LessonToolbar from "../../components/_dashboard/lesson/list/LessonToolbar";
 import LessonHead from "../../components/_dashboard/lesson/list/LessonHead";
