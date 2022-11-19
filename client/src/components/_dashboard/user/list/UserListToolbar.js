@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import {Icon} from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
-// import roundFilterList from '@iconify/icons-ic/round-filter-list';
+import roundFilterList from '@iconify/icons-ic/round-filter-list';
 // material
 import {styled, useTheme} from '@material-ui/core/styles';
 import {Box, IconButton, InputAdornment, OutlinedInput, Toolbar, Tooltip, Typography,} from '@material-ui/core';
@@ -117,10 +117,16 @@ export default function UserListToolbar({
                     />
                 )}
 
-                {numSelected > 0 && (
+                {numSelected > 0 ? (
                     <Tooltip title="Xóa">
                         <IconButton onClick={() => handleClickOpen()}>
                             <Icon icon={trash2Fill}/>
+                        </IconButton>
+                    </Tooltip>
+                ) : (
+                    <Tooltip title="Filter list">
+                        <IconButton>
+                            <Icon icon={roundFilterList}/>
                         </IconButton>
                     </Tooltip>
                 )}

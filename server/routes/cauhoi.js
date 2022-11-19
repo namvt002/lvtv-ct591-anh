@@ -30,7 +30,6 @@ module.exports = function (app) {
     app.put("/api/baikiemtra/:id", async (req, res) => {
         const {id} = req.params;
         const {cauhoi, baikiemtra} = req.body;
-        console.log(req.body)
         const _bkt = await query(db, `UPDATE bai_kiem_tra SET ? WHERE bkt_id = ?`, [baikiemtra, id]);
         await query(db, "DELETE from cau_hoi_kiem_tra WHERE chkt_idbkt = ?", id);
         await Promise.all(cauhoi.map(async e => {
@@ -104,7 +103,6 @@ module.exports = function (app) {
                                                 WHERE
                                                     chkt_idbkt = ?`, _baikiemtra[0].bkt_id);
             await Promise.all(_cauhoi.map(async (e, idx) => {
-                console.log(e)
                 let _da = await query(db, "SELECT * FROM dap_an_cau_hoi WHERE dach_idchkt = ? ORDER BY dach_idchkt", e.ch_id);
                 let ch_dapan = [];
                 let ch_dapandung = [];
@@ -165,7 +163,6 @@ module.exports = function (app) {
                                                 WHERE
                                                     chkt_idbkt = ?`, _baikiemtra[0].bkt_id);
             await Promise.all(_cauhoi.map(async (e, idx) => {
-                console.log(e)
                 let _da = await query(db, "SELECT * FROM dap_an_cau_hoi WHERE dach_idchkt = ? ORDER BY dach_idchkt", e.ch_id);
                 let ch_dapan = [];
                 let ch_dapandung = [];

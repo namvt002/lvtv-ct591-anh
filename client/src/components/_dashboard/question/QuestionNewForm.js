@@ -32,8 +32,8 @@ import {getData, postData, putData} from '../../../_helper/httpProvider';
 import {API_BASE_URL} from '../../../config/configUrl';
 import {MIconButton} from '../../@material-extend';
 import closeFill from '@iconify/icons-eva/close-fill';
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
+// import {useDispatch} from "react-redux";
+// import {useNavigate} from "react-router-dom";
 // ----------------------------------------------------------------------
 
 const LabelStyle = styled(Typography)(({theme}) => ({
@@ -63,8 +63,8 @@ export default function QuestionNewForm({isEdit, current}) {
     const [courses, setCourses] = useState([]);
     const [question, setQuestion] = useState([]);
     const [idndbh, setIdndbh] = useState(1);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const dispatch = useDispatch();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {

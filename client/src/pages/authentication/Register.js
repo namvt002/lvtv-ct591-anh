@@ -60,7 +60,7 @@ export default function Register() {
             <MHidden width="mdDown">
                 <SectionStyle>
                     <Typography variant="h4" sx={{px: 5, mt: 10, mb: 5}}>
-                        Chào mừng bạn đến với HYBE!
+                        Chào mừng bạn đến với LearnCode!
                     </Typography>
                     <img
                         alt="register"

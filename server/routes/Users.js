@@ -85,9 +85,6 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/users/shipper', async (req, res) => {
-        return res.status(200).send(await query(sql, 'SELECT * FROM users WHERE role_id = 4'));
-    })
 
     app.put("/user/:id/edit", async (req, res) => {
         const {id} = req.params;
@@ -125,7 +122,7 @@ module.exports = function (app) {
                 ]);
                 const optionsSendMail = {
                     to: data.email, // list of receivers
-                    subject: "Tài khoản HYPE shop", // Subject line
+                    subject: "Tài khoản LearnCode shop", // Subject line
                     html: `<h1>Chào <span style="color: red">${data.fullname}</span></h1>
           <h5>Tài khoản của bạn là:</h5>
                   <div>

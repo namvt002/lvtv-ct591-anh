@@ -7,7 +7,8 @@ import {randomIntFromInterval} from "../../_helper/helper";
 import {useNavigate} from 'react-router-dom'
 import {useDispatch} from "react-redux";
 import {runCode} from "../../redux/slices/code";
-import {PATH_PAGE} from "../../routes/paths";
+import {PATH_AUTH, PATH_PAGE} from "../../routes/paths";
+import { useSelector } from "react-redux";
 
 const SkeletonLoad = (
     <>
@@ -34,6 +35,7 @@ export default function CourseList() {
     const [isLoad, setLoad] = useState(true);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isLogin = useSelector((state) => state?.user?.current?.role);
 
     useEffect(() => {
         (async () => {
@@ -62,7 +64,11 @@ export default function CourseList() {
                                             Học {kh_ten}
                                         </Button>
                                         <Button onClick={() => {
-                                            navigate(PATH_PAGE.certificate + `/${kh_makh}`)
+                                            isLogin ?
+                                            navigate(PATH_PAGE.certificate + `/${kh_makh}`) :
+                                            navigate(PATH_AUTH.login)
+
+
                                         }} variant='contained' disabled={num_bkt === 0} color='warning'
                                                 sx={{width: '20rem'}}>
                                             Lấy chứng chỉ

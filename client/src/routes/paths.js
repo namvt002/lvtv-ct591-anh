@@ -37,6 +37,7 @@ export const PATH_DASHBOARD = {
         root: path(ROOTS_DASHBOARD, '/user'),
         profile: path(ROOTS_DASHBOARD, '/user/profile'),
         list: path(ROOTS_DASHBOARD, '/user/list'),
+        new: path(ROOTS_DASHBOARD, '/user/new'),
     },
     course: {
         root: path(ROOTS_DASHBOARD, '/course'),
