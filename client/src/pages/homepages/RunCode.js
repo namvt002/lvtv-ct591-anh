@@ -1,7 +1,7 @@
 import Page from "../../components/Page";
 import {Box, Button, Card, Container, Grid} from "@material-ui/core";
 import Editor from "@monaco-editor/react";
-import { useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {API_BASE_URL} from "../../config/configUrl";
 import {postData} from "../../_helper/httpProvider";
@@ -40,7 +40,7 @@ export default function RunCode() {
                 }
             }
         )()
-    }, [code,lang, id])
+    }, [code, lang, id])
 
 
     return <>

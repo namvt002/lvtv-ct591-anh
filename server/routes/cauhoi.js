@@ -181,4 +181,11 @@ module.exports = function (app) {
         return res.status(200).send(data)
     });
 
+    app.post('/api-v1/ketquakiemtra', async (req, res)=>{
+        const data = req.body;
+        console.log(data.selectValues)
+        // const qr =
+        return res.status(200).send("ok")
+    })
+
 }

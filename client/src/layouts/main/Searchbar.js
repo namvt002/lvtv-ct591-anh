@@ -8,7 +8,6 @@ import {
     Card,
     Input,
     InputAdornment,
-    Stack,
     Table,
     TableBody,
     TableCell,
@@ -119,7 +118,7 @@ export default function Searchbar() {
                     }
                     sx={{mr: 1, fontWeight: 'fontWeightBold'}}
                 />
-                <Button variant="contained" sx={{width: '9rem'}} 
+                <Button variant="contained" sx={{width: '9rem'}}
                     // onClick={() => {
                     //     navigate(`${PATH_PAGE.product}?search=${search}`)
                     // }}

@@ -4,7 +4,6 @@ import {Link as RouterLink} from 'react-router-dom';
 import {styled} from '@material-ui/core/styles';
 import {Container, Divider, Grid, Link, Stack, Typography} from '@material-ui/core';
 // routes
-import {PATH_PAGE} from '../../routes/paths';
 //
 import Logo from '../../components/Logo';
 
@@ -25,7 +24,7 @@ const LINKS = [
         headline: 'Hỗ trợ',
         children: [
             {name: 'Quên mật khẩu', href: '#'},
-            {name: 'Đổi mật khẩu', href: '#'},            
+            {name: 'Đổi mật khẩu', href: '#'},
         ]
     },
     {
@@ -61,7 +60,8 @@ export default function MainFooter() {
                     </Grid>
                     <Grid item xs={8} md={3}>
                         <Typography variant="body2" sx={{pr: {md: 5}}}>
-                           Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br /> LearnCode nơi cung cấp tri thức trẻ cho mọi người!
+                            Đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ <br/> LearnCode nơi cung cấp tri thức trẻ cho mọi
+                            người!
                         </Typography>
                     </Grid>
 

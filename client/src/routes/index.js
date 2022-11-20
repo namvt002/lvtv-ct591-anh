@@ -162,6 +162,9 @@ export default function Router() {
                     }, {
                         path: ':id/edit',
                         element: <BlogNewPostForm/>
+                    }, {
+                        path: 'detail/:id',
+                        element: <BlogDetail/>
                     }]
             }, {
                 path: 'course-content/:id',
@@ -203,6 +206,7 @@ const Profile = Loadable(lazy(() => import('../pages/homepages/Profile')))
 
 const BlogNewPostForm = Loadable(lazy(() => import('../pages/homepages/blog/BlogNewPostForm')))
 const BlogPosts = Loadable(lazy(() => import('../pages/homepages/blog/BlogPosts')))
+const BlogDetail = Loadable(lazy(() => import('../pages/homepages/blog/BlogDetail')))
 
 
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));

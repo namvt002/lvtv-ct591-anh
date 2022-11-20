@@ -52,7 +52,7 @@ export default function DialogConfirm({
                                       }) {
     const [shipper, sertShipper] = useState();
     const {enqueueSnackbar} = useSnackbar();
-    const isAdmin = useSelector(state => state.user.current.role) === "ADMIN";
+    const isAdmin = useSelector(state => state.user.current?.role) === "ADMIN";
 
 
     useEffect(() => {

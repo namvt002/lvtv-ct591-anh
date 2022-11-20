@@ -1,4 +1,4 @@
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useSearchParams} from 'react-router-dom';
 // material
 import {styled} from '@material-ui/core/styles';
 import {Box, Card, Container, Link, Stack, Typography,} from '@material-ui/core';
@@ -8,8 +8,11 @@ import {PATH_AUTH} from '../../routes/paths';
 import AuthLayout from '../../layouts/AuthLayout';
 // components
 import Page from '../../components/Page';
-import {MHidden} from '../../components/@material-extend';
+import {MHidden, MIconButton} from '../../components/@material-extend';
 import {LoginForm} from '../../components/authentication/login';
+import {useSnackbar} from 'notistack5';
+import {Icon} from '@iconify/react';
+import closeFill from '@iconify/icons-eva/close-fill';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +44,20 @@ const ContentStyle = styled('div')(({theme}) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+    const [errParams] = useSearchParams();
+    let err = errParams.get('noErr');
+    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+
+    if (Number(err) === 2) {
+        enqueueSnackbar('Tài khoản đã bị vô hiệu hóa', {
+            variant: 'error',
+            action: (key) => (
+                <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+                    <Icon icon={closeFill}/>
+                </MIconButton>
+            ),
+        });
+    }
     return (
         <RootStyle title="Login | Minimal-UI">
             <AuthLayout>
@@ -58,7 +75,7 @@ export default function Login() {
             <MHidden width="mdDown">
                 <SectionStyle>
                     <Typography variant="h4" sx={{px: 5, mt: 10, mb: 5}}>
-                        Cửa hàng LearnCode xin chào!!
+                        Cửa hàng HYBE xin chào!!
                     </Typography>
                     <img src="/static/illustrations/login.png" alt="login"/>
                 </SectionStyle>
@@ -80,7 +97,7 @@ export default function Login() {
                         />
                     </Stack>
 
-                    <LoginForm/>
+                    <LoginForm errParams={errParams}/>
 
                     <MHidden width="smUp">
                         <Typography variant="body2" align="center" sx={{mt: 3}}>

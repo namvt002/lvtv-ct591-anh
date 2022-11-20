@@ -55,7 +55,7 @@ export const PATH_DASHBOARD = {
     question: {
         root: path(ROOTS_DASHBOARD, '/question'),
         new: path(ROOTS_DASHBOARD, '/question/new')
-    }, 
-   
+    },
+
 
 };
