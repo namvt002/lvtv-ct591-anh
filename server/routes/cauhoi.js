@@ -217,25 +217,23 @@ module.exports = function (app) {
                 cc_idbkt: data.idbkt,
                 cc_diem: (phatram/ ketqua.length)*100
             }]);
-            let qrrs = `
-                SELECT chung_chi.*,bai_kiem_tra.*, users.fullname, users.email 
-                FROM chung_chi 
-                JOIN bai_kiem_tra 
-                    ON chung_chi.cc_idbkt = bai_kiem_tra.bkt_id
-                        JOIN users 
-                            ON chung_chi.cc_iduser = users.id 
-            `
-            const _rs =  await query(db, qrrs);
+            // let qrrs = `
+            //     SELECT chung_chi.*,bai_kiem_tra.*, users.fullname, users.email
+            //     FROM chung_chi
+            //     JOIN bai_kiem_tra
+            //         ON chung_chi.cc_idbkt = bai_kiem_tra.bkt_id
+            //             JOIN users
+            //                 ON chung_chi.cc_iduser = users.id
+            // `
+            // const _rs =  await query(db, qrrs);
             return res.status(200).send({
                 message: "pass",
                 points: (phatram/ ketqua.length)*100,
-                result: _rs
             })
         }else{
             return res.status(200).send({
                 message: "fail",
                 points: (phatram/ ketqua.length)*100,
-                result: ''
             })
         }
     })
