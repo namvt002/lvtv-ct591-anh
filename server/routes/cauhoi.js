@@ -180,12 +180,68 @@ module.exports = function (app) {
         }
         return res.status(200).send(data)
     });
+    function checkDapAn (arr1, arr2){
+        if(arr1.length === 0 ||  arr2.length === 0) return 0;
+        let correct = 0;
+        arr1.map(e =>{
+            let index = arr2.findIndex(el => parseInt(el) === parseInt(e));
+            if(index !== -1) correct++;
+            return correct;
+        })
+        return (correct/ arr2.length);
+    }
 
     app.post('/api-v1/ketquakiemtra', async (req, res)=>{
         const data = req.body;
-        console.log(data.selectValues)
-        // const qr =
-        return res.status(200).send("ok")
+        console.log(data)
+        let ketqua = [];
+        await Promise.all(
+            data.selectValues.map(async (dataClient, idx)=>{
+                let qr = `
+                        SELECT * FROM dap_an_cau_hoi WHERE dach_idchkt = ? AND dach_dapandung = 1
+                        `;
+                let tmp =  await query(db, qr, [ dataClient.ch_id] );
+                // arr1.push();
+                let tempKetQua  = checkDapAn((dataClient.ch_idda),(tmp.map(e=>e.dach_id)));
+                ketqua.push(tempKetQua);
+            })
+        )
+        let phatram = 0;
+        ketqua.map(e=>{
+            if(e == 1){
+                phatram++
+            }
+        })
+        if((phatram/ ketqua.length)*100 >= 70){
+            let qrcc =  `
+                INSERT INTO chung_chi SET ?
+            `;
+            await query(db, qrcc, [{
+                cc_iduser: data.userid,
+                cc_idbkt: data.idbkt,
+                cc_diem: (phatram/ ketqua.length)*100
+            }]);
+            let qrrs = `
+                SELECT chung_chi.*,bai_kiem_tra.*, users.fullname, users.email 
+                FROM chung_chi 
+                JOIN bai_kiem_tra 
+                    ON chung_chi.cc_idbkt = bai_kiem_tra.bkt_id
+                        JOIN users 
+                            ON chung_chi.cc_iduser = users.id 
+            `
+            const _rs =  await query(db, qrrs);
+            return res.status(200).send({
+                message: "pass",
+                points: (phatram/ ketqua.length)*100,
+                result: _rs
+            })
+        }else{
+            return res.status(200).send({
+                message: "fail",
+                points: (phatram/ ketqua.length)*100,
+                result: ''
+            })
+        }
     })
 
 }
