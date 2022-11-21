@@ -1,0 +1,123 @@
+
+function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function sanpham(_sp, idx){
+    let rs =  _sp[idx];
+    rs.cthd_soluong = randomIntFromInterval(1, 5);
+    return rs;
+}
+
+
+
+function makeName(length) {
+    let result           = '';
+    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function makePhone(length) {
+    let result           = '';
+    let characters       = '0123456789';
+    let charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+app.get("/test", async (req, res)=>{
+    let _book = await query(db, "SELECT sp_id as cthd_idsp, (gb_gia * 1.2) cthd_giaban  FROM san_pham LEFT JOIN gia_ban ON san_pham.sp_id = gia_ban.gb_idsp WHERE gb_gia > 0");
+
+
+    let _fullname = [
+        "Nguyễn Thị ",
+        "Nguyễn Văn "
+    ]
+    // let cre = '$2a$08$lbx81pq4pOzujh3wafVU.O5H3WevsHy7UJS8Y49dHRyqV7cXnwfRK';
+    // let users = [];
+    // for(let i = 1; i < 5; i++ ){
+    //     let _gender = randomIntFromInterval(0,1)
+    //     users.push([
+    //         'nhanvien'+i+'@gmail.com',
+    //         _fullname[_gender]  + makeName(1),
+    //         cre,
+    //         '09'+makePhone(8),
+    //         _gender === 1 ? 'male' : 'female',
+    //         '2000-01-01',
+    //         1,
+    //         4
+    //     ])
+    // }
+    // await query(db, "INSERT INTO users(email, fullname, credential, phone, gender, birthday, verify, role_id) VALUES ?", [users])
+    let ngay_tao = randomDate(new Date(2020, 1, 1), new Date());
+
+
+    for (let i = 1; i<= 1000; i++){
+        let _sp = [
+            sanpham(_book,randomIntFromInterval(1, _book.length - 1)),
+            sanpham(_book,randomIntFromInterval(1, _book.length - 1)),
+            sanpham(_book,randomIntFromInterval(1, _book.length - 1)),
+            sanpham(_book,randomIntFromInterval(1, _book.length - 1)),
+            sanpham(_book,randomIntFromInterval(1, _book.length - 1))
+        ]
+        let sp_dif =  _sp.filter((value, index, self) => index === self.findIndex(t => t.cthd_idsp === value.cthd_idsp));
+        let tong_don = sp_dif.reduce((total, item) => total + item.cthd_giaban * item.cthd_soluong, 0);
+        let hoadon = {
+            hd_tenkh: _fullname[randomIntFromInterval(0,1)] + makeName(1),
+            hd_diachi: randomIntFromInterval( 100, 1000)+ "Nguyễn Trãi, Hòa Bình, Ninh Kiều, Cần Thơ",
+            hd_sdt:  '09'+makePhone(8),
+            hd_email: 'khachhang' + randomIntFromInterval(100, 1000) +'@gmail.com',
+            hd_tongtien: tong_don,
+            hd_tienvc: tong_don < 500000 ? 30000: 0,
+            hd_hinhthucthanhtoan: 'offline',
+            hd_idkh: randomIntFromInterval(1160, 2158),
+            hd_idnv: randomIntFromInterval(2159,2162),
+            hd_ngaytao: ngay_tao
+        }
+        let _hoadon = await query(db,"INSERT INTO hoa_don SET ?", hoadon);
+        let trangthai = [
+            [ngay_tao,0,null,_hoadon.insertId, null],
+            [ngay_tao,1, randomIntFromInterval(2163,2166),_hoadon.insertId, null],
+            [ngay_tao,2, randomIntFromInterval(2163,2166),_hoadon.insertId, null],
+            [ngay_tao,3, randomIntFromInterval(2163,2166),_hoadon.insertId, 'hoadon-1667713961810.jpg']
+        ]
+        await query(db,"INSERT INTO trang_thai(tt_ngaycapnhat, tt_trangthai, tt_idnv, tt_idhd, tt_note) VALUES ?", [trangthai]);
+        let sps = [];
+        sp_dif.map(e => sps.push([e.cthd_idsp, e.cthd_giaban,_hoadon.insertId, e.cthd_soluong]))
+        await query(db, "INSERT INTO chi_tiet_hoa_don(cthd_idsp, cthd_giaban, cthd_idhd, cthd_soluong) VALUES ?", [sps]);
+    }
+    return res.status(200).send("ok");
+
+
+})
+
+let user = await query(db, "select  cthd_idsp, hd_idkh\n" +
+        "from hoa_don left join chi_tiet_hoa_don on hoa_don.hd_id = chi_tiet_hoa_don.cthd_idhd");
+    let comment = [
+        'Một trong những tác phẩm kinh điển, bestseller nên đọc. Sách kể về câu chuyện của một cậu bé chăn cừu trên con đường đi tìm kiếm kho báu khổng lồ. Câu chuyện đem đến cho bản thân em nhiều suy nghĩ và liên tưởng về cuộc sống này. Con đường cậu đi, những ngôi làng, những sa mạc, những con người cùng những cuộc gặp gỡ. Cuộc sống chính được tạo nên từ những điều như thế. Trong hành trình tiến về phía trước luôn có những khó khăn, vất vả, những mất mát hay cả những thất bại. Nhưng chúng ta nhất định phải bản lĩnh và kiên cường. Tuyệt đối không bị gục ngã trước nghịch cảnh. Và định nghĩa về những điều quý giá, chúng vẫn luôn hiện hữu xung quanh chúng ta, là tình thân, tình bạn, tình yêu,... Vậy nên đừng tìm kiếm xa xôi, hãy luôn quý trọng tất cả những gì mà mình đang có. Hẳn cuốn sách còn đem lại nhiều hơn những suy nghĩ sâu sắc, đây chỉ là những cảm nhận chung nhất của em. Cuốn sách rất hay, rất đáng mua đọc ạ.',
+        `Đi tìm kho báu ở kim tự tháp Ai cập. 1 hành trình dài bắt đầu và có rất nhiều lúc cậu có ý định quay trở về. Sau bao nhiêu khó khăn : bị lừa hết sạch tiền ,lạc lõng ở 1 nơi hoàn toàn xa lạ cậu học được cách hòa nhập và hiểu ra rằng tất cả chỉ là một. Cậu đã hòa nhập học được 1 ngôn ngữ mới và hành trình gian nan chính thức bắt đầu. Cậu đi băng qua sa mạc với nỗi nguy hiểm của gió cát ,rắn độc, bọn cướp... Cậu gặp được 1 Anh chàng có mong ước trở thành nhà giả kim cũng đang theo đuổi sứ mệnh của mình. Họ trốn vào 1 đảo để lẩn tránh cuộc chiến của các bộ tộc. Cậu đã hòa vào làm 1 với tâm linh vũ trụ và cứu sống cư dân trong ốc đảo, nhờ đó cậu gặp được nhà giả kim mà người bạn của cậu rất muốn gặp. Cậu lại tiếp tục hành trình đi tìm kho báu với nhà giả kim nọ và để định mệnh của đời cậu- nàng fatima ở lại ốc đảo chờ đợi. Kết thúc với việc cậu đã tìm thấy kho báu với rất nhiều vàng bạc và thông điệp cuối cùng là:''cuộc đời rất hào phóng với người nào chịu theo đuổi vận mệnh của mình"`,
+        `Cuối cùng thì tớ đã đọc được cuốn xếp vào hàng kinh điển này sau bao ngày lần lữa. Phải nói rằng, tớ đã đọc qua nhiều quan điểm trái chiều về cuốn này trước khi đọc nó (và tớ hơi hối hận vì đã làm thế). Hầu hết thì cho rằng cuốn này xứng tầm với danh tiếng của mình, số khác cho rằng Nhà giả kim bị đánh giá quá cao, nhiều người bảo "bình thường". Nhưng đọc rồi thì tớ lại có cảm nhận của riêng mình. Nhà giả kim mang hình mẫu của một câu chuyện ngụ ngôn, nhưng lại thể hiện cái tôi nhân vật nhiều. Đó là cách mà Paulo Coelho tạo dựng truyện ngụ ngôn theo kiểu của riêng ông. Bằng cách sử dụng câu chuyện của cậu chăn cừu - một câu chuyện hiện hữu và dễ hình dung, Paulo đã truyền tải những triết lý về cuộc đời, về ước mơ và cả số phận con người. Câu chuyện có lẽ hơi bình dị với một số người, nhưng chính sự giản đơn đó đã dẫn dắt thành công câu chuyện. Hành trình của cậu chăn cừu là một hành trình vừa thực vừa ảo, chân thực mà cũng có những khoảnh khắc xa lạ tưởng như mơ. Đó không chỉ là một chuyến đi thực thụ, đó còn là bước trở mình từ cậu bé chăn cừu chỉ suốt ngày quẩn quanh bên đàn cừu, đến người đàn ông trưởng thành dám ra đi để tìm kho báu đích thực. Một câu chuyện kỳ diệu và nhân văn. Với tớ, đọc sách là một dạng trải nghiệm, và nhận thức về trải nghiệm này thường dựa trên trải nghiệm trong cuộc sống. Nhiều người không đánh giá cao Nhà giả kim bởi vì với trải nghiệm đời thực của họ, câu chuyện về cậu bé chăn cừu không có gì mới lạ. Còn về phần tớ, đó lại là một câu chuyện mang tính truyền cảm cao và không quá triết lý để có thể cảm nhận được. Tóm lại, tớ hoàn toàn hài lòng về cuốn sách này. (Tuy nhiên thì với mấy cái ý kiến thần thánh hoá cuốn này thì tớ không đồng tình rồi).`,
+        `Rất đáng đọc! Cuốn sách là cuộc hành trình đi theo giấc mơ và chỉ dẫn của cảm nhận đôi khi ngờ nghệch, đôi khi lại sắc bén không ngờ của nhân vật chính. Một câu chuyện cổ tích ra đời ở thời hiện đại, hướng chúng ta về những cảm nhận của bản thân, khuyên nhủ ta không nên sống quá lí trí. Nói rằng đây là một cuốn truyện cổ tích vì cốt truyện rất đỗi đơn giản, những ẩn dụ không quá khó để nhận ra, cuộc hành trình vốn dĩ rất thú vị đối với nhiều người, nhưng lại trở nên kém hấp dẫn đối với những người đã trải qua rồi. Tuy nhiên không thể nói đây là cuốn sách không hay, khi tùy với cách cảm nhận của mỗi người, nhưng khi được đánh giá quá cao so với những gì cuốn sách thực sự có, sẽ gây ra những phản ứng trái chiều đối với người đọc.`,
+        `Mình thấy rằng nhiều người trong chúng ta sống cho ước mơ của người khác chứ không phải ước mơ của chính mình. Có thể như thế sẽ khiến bạn có nhiều vật chất, nhưng không bao giờ có được sự đủ đầy toàn vẹn vì không gắn kết với chính bản thân mình, chưa có sự hòa hợp từ tận trái tim. Đâu hẳn mọi thứ đều biến thành vàng là tốt. Vạn vận phải biến hóa, đa dạng và khi sinh ra thì đều có một “vận mệnh” riêng được tạo hóa sắp đặt sẵn rồi. Đã có lúc nào trong thoáng chốc, bạn thổn thức với những ước mơ, nhưng lại tự dặn lòng giấu đi vì nghĩ nếu nói ra nó sẽ bị vùi lấp bởi những định kiến chưa? Hãy cứ ước mơ,cho dù nó là điều gì đi chăng nữa, vĩ đại hay nhỏ bé, khi bạn làm những điều bạn mơ ước thì cả vũ trụ cũng sẽ giúp đỡ bạn. Quan trọng là hãy sống theo con đường mình vạch ra từ đầu. Cuộc đời rất hào phóng với người nào chịu theo đuổi vận mệnh của mình.Đây là cuốn sách hay nên các bạn nên đọc nhé !!!`,
+        `Tác phẩm này đúng là kinh điển nhé mọi người, ai chưa đọc nên đọc, vì đọc rồi sẽ hối tiếc tại sao không biết nó sớm hơn.`,
+        `mình mua sách rồi nhé , sách đẹp . lắm , nhìn màu bìa hài hòa rất hợp mắt , hàng y như hình và sách mới thơm lúc , Màu trang sách bên trong cũng rất đẹp , chất lượng in tốt`
+    ]
+    console.log(user)
+    let arr = [];
+    user.map(e=>arr.push([
+        comment[randomIntFromInterval(0, comment.length - 1)],
+        randomIntFromInterval(4,5),
+        e.cthd_idsp,
+        e.hd_idkh
+    ]));
+    await query(db,"INSERT binh_luan(bl_noidung, bl_danhgia, bl_idsp, bl_idkh) VALUES ?", [arr])
