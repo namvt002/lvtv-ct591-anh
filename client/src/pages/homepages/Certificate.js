@@ -37,6 +37,7 @@ export default function Certificate() {
     const [selectedValue, setSelectedValue] = useState([]);
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     const userid = useSelector(state => state.user.current?.id)
+    const userName = useSelector(state => state.user.current?.fullname)
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -82,8 +83,6 @@ export default function Certificate() {
             setFieldValue('selectValues', [...Array(res.data.cauhoi.length)]);
         })();
     }, [id, _load]);
-
-    console.log(values, 'aaa');
 
     return (
         <>
@@ -222,7 +221,7 @@ export default function Certificate() {
                 </Page>
                 :
                 <Page>
-                    <Invoice></Invoice>
+                    <Invoice diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''} userName={userName} />
                 </Page>
             }
         </>

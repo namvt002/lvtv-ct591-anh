@@ -1,6 +1,5 @@
-import { sum } from 'lodash';
-import PropTypes from 'prop-types';
 import { Page, View, Text, Font, Image, Document, StyleSheet } from '@react-pdf/renderer';
+import Logo from "../../../components/Logo";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +21,10 @@ const styles = StyleSheet.create({
         letterSpacing: 1.2,
         textTransform: 'uppercase'
     },
+    h1: { fontSize: 36, fontWeight: 700 },
     h3: { fontSize: 16, fontWeight: 700 },
+    title: {marginTop: "10px"},
+    wrapKhoaHoc: {marginTop: "60px"},
     h4: { fontSize: 13, fontWeight: 700 },
     body1: { fontSize: 10 },
     subtitle2: { fontSize: 9, fontWeight: 700 },
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         borderColor: '#DFE3E8'
     },
-    gridContainer: { flexDirection: 'row', justifyContent: 'space-between' },
+    gridContainer: { flexDirection: 'row'},
     table: { display: 'flex', width: 'auto' },
     tableHeader: {},
     tableBody: {},
@@ -65,137 +67,35 @@ const styles = StyleSheet.create({
 
 // ----------------------------------------------------------------------
 
-InvoicePDF.propTypes = {
-    invoice: PropTypes.object.isRequired
-};
-
-export default function InvoicePDF({ invoice }) {
-    const { id, items, taxes, status, discount, invoiceTo, invoiceFrom } = invoice;
-    const subTotal = sum(items.map((item) => item.price * item.qty));
-    const total = subTotal - discount + taxes;
-
+export default function InvoicePDF({diem, baithi, userName}) {
+    console.log(diem, baithi, userName, "hien thi trong cai pdf view ne")
+    let ngay = new Date();
     return (
         <Document>
             <Page size="A4" style={styles.page}>
-                <View style={[styles.gridContainer, styles.mb40]}>
-                    <Image source="/static/brand/logo_full.jpg" style={{ height: 32 }} />
-                    <View style={{ alignItems: 'right', flexDirection: 'column' }}>
-                        <Text style={styles.h3}>{status}</Text>
-                        <Text>INV-{id}</Text>
-                    </View>
+                <View style={[styles.gridContainer]}>
+                    <Image source="/static/brand/code-optimization.png" style={{ height: 32, marginRight: "10px" }} />
+                    <Text style={[styles.h3, styles.title]}>LearnCode</Text>
                 </View>
 
-                <View style={[styles.gridContainer, styles.mb40]}>
-                    <View style={styles.col6}>
-                        <Text style={[styles.overline, styles.mb8]}>Invoice from</Text>
-                        <Text style={styles.body1}>{invoiceFrom.name}</Text>
-                        <Text style={styles.body1}>{invoiceFrom.address}</Text>
-                        <Text style={styles.body1}>{invoiceFrom.phone}</Text>
-                    </View>
-                    <View style={styles.col6}>
-                        <Text style={[styles.overline, styles.mb8]}>Invoice to</Text>
-                        <Text style={styles.body1}>{invoiceTo.name}</Text>
-                        <Text style={styles.body1}>{invoiceTo.address}</Text>
-                        <Text style={styles.body1}>{invoiceTo.phone}</Text>
-                    </View>
+                <View style={{ alignItems: 'right', flexDirection: 'column' }}>
+                    <Text style={[styles.overline, styles.mb8]}>Đã hoàn thành khóa học {baithi.baikiemtra.kh_ten}</Text>
                 </View>
 
-                <Text style={[styles.overline, styles.mb8]}>Invoice Details</Text>
-
-                <View style={styles.table}>
-                    <View style={styles.tableHeader}>
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell_1}>
-                                <Text style={styles.subtitle2}>#</Text>
-                            </View>
-                            <View style={styles.tableCell_2}>
-                                <Text style={styles.subtitle2}>Description</Text>
-                            </View>
-                            <View style={styles.tableCell_3}>
-                                <Text style={styles.subtitle2}>Qty</Text>
-                            </View>
-                            <View style={styles.tableCell_3}>
-                                <Text style={styles.subtitle2}>Unit price</Text>
-                            </View>
-                            <View style={[styles.tableCell_3, styles.alignRight]}>
-                                <Text style={styles.subtitle2}>Total</Text>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.tableBody}>
-                        {items.map((item, index) => (
-                            <View style={styles.tableRow} key={item.id}>
-                                <View style={styles.tableCell_1}>
-                                    <Text>{index + 1}</Text>
-                                </View>
-                                <View style={styles.tableCell_2}>
-                                    <Text style={styles.subtitle2}>{item.title}</Text>
-                                    <Text>{item.description}</Text>
-                                </View>
-                                <View style={styles.tableCell_3}>
-                                    <Text>{item.qty}</Text>
-                                </View>
-                                <View style={styles.tableCell_3}>
-                                    <Text>{item.price}</Text>
-                                </View>
-
-                            </View>
-                        ))}
-
-                        <View style={[styles.tableRow, styles.noBorder]}>
-                            <View style={styles.tableCell_1} />
-                            <View style={styles.tableCell_2} />
-                            <View style={styles.tableCell_3} />
-                            <View style={styles.tableCell_3}>
-                                <Text>Subtotal</Text>
-                            </View>
-
-                        </View>
-
-                        <View style={[styles.tableRow, styles.noBorder]}>
-                            <View style={styles.tableCell_1} />
-                            <View style={styles.tableCell_2} />
-                            <View style={styles.tableCell_3} />
-                            <View style={styles.tableCell_3}>
-                                <Text>Discount</Text>
-                            </View>
-
-                        </View>
-
-                        <View style={[styles.tableRow, styles.noBorder]}>
-                            <View style={styles.tableCell_1} />
-                            <View style={styles.tableCell_2} />
-                            <View style={styles.tableCell_3} />
-                            <View style={styles.tableCell_3}>
-                                <Text>Taxes</Text>
-                            </View>
-
-                        </View>
-
-                        <View style={[styles.tableRow, styles.noBorder]}>
-                            <View style={styles.tableCell_1} />
-                            <View style={styles.tableCell_2} />
-                            <View style={styles.tableCell_3} />
-                            <View style={styles.tableCell_3}>
-                                <Text style={styles.h4}>Total</Text>
-                            </View>
-
-                        </View>
-                    </View>
+                <View style={{ alignItems: 'right', flexDirection: 'column' }}>
+                    <Text style={[styles.overline, styles.subtitle2, styles.wrapKhoaHoc]}>Cấp chứng chỉ</Text>
+                    <Text style={[styles.overline, styles.h1]}>Khóa học {baithi.baikiemtra.kh_ten}</Text>
                 </View>
 
-                <View style={[styles.gridContainer, styles.footer]}>
+                <View style={[styles.gridContainer]}>
                     <View style={styles.col8}>
-                        <Text style={styles.subtitle2}>NOTES</Text>
-                        <Text>We appreciate your business. Should you need us to add VAT or extra notes let us know!</Text>
-                    </View>
-                    <View style={[styles.col4, styles.alignRight]}>
-                        <Text style={styles.subtitle2}>Have a Question?</Text>
-                        <Text>support@abcapp.com</Text>
+                        <Text style={styles.h3}>{userName}</Text>
+                        <Text style={styles.subtitle2}>Điểm: {diem} </Text>
+                        <Text style={styles.subtitle2}>Ngày thi: {ngay.getDate()}</Text>
                     </View>
                 </View>
             </Page>
         </Document>
+
     );
 }
