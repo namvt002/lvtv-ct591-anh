@@ -7,10 +7,11 @@ import MyCertificatePDF from "./MyCertificatePDF";
 
 export default function MyCertficate() {
     const userid = useSelector(state => state.user.current?.fullname)
+    const id = useSelector(state => state.user.current?.id)
     const [chungchi, setChungChi] = useState([]);
     useEffect(() => {
         (async () => {
-            const res = await getData(API_BASE_URL + `/api-v1/chungchi`);
+            const res = await getData(API_BASE_URL + `/api-v1/chungchi?iduser=${id}`);
             setChungChi(res.data)
         })()
     },[]);

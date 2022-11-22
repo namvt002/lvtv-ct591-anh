@@ -225,7 +225,7 @@ export default function Certificate() {
                     </Container>
                 </Page>
                 :
-                ketQua.point === 'pass' ?
+                ketQua.message === 'pass' ?
                     <Page>
                         <Invoice diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''} userName={userName} />
                     </Page>

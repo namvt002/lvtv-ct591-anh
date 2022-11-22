@@ -230,15 +230,16 @@ module.exports = function (app) {
         }
     })
     app.get("/api-v1/chungchi", async (req, res) => {
-
+        const {iduser} = req.query;
         const qr = `
               SELECT * FROM bai_kiem_tra 
                 JOIN chung_chi 
                     ON bai_kiem_tra.bkt_id = chung_chi.cc_idbkt 
                         JOIN khoa_hoc 
                             ON bai_kiem_tra.bkt_idkh = khoa_hoc.kh_id
+                              WHERE chung_chi.cc_iduser = ?
         `;
 
-        return res.status(200).send(await query(db, qr))
+        return res.status(200).send(await query(db, qr, [iduser]));
     });
 }
