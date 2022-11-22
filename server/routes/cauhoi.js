@@ -1,5 +1,6 @@
 const db = require("../db");
 const query = require("../lib/query");
+const sql = require("../db");
 
 module.exports = function (app) {
     app.post("/api/baikiemtra", async (req, res) => {
@@ -217,15 +218,6 @@ module.exports = function (app) {
                 cc_idbkt: data.idbkt,
                 cc_diem: (phatram/ ketqua.length)*100
             }]);
-            // let qrrs = `
-            //     SELECT chung_chi.*,bai_kiem_tra.*, users.fullname, users.email
-            //     FROM chung_chi
-            //     JOIN bai_kiem_tra
-            //         ON chung_chi.cc_idbkt = bai_kiem_tra.bkt_id
-            //             JOIN users
-            //                 ON chung_chi.cc_iduser = users.id
-            // `
-            // const _rs =  await query(db, qrrs);
             return res.status(200).send({
                 message: "pass",
                 points: (phatram/ ketqua.length)*100,
@@ -237,4 +229,16 @@ module.exports = function (app) {
             })
         }
     })
+    app.get("/api-v1/chungchi", async (req, res) => {
+
+        const qr = `
+              SELECT * FROM bai_kiem_tra 
+                JOIN chung_chi 
+                    ON bai_kiem_tra.bkt_id = chung_chi.cc_idbkt 
+                        JOIN khoa_hoc 
+                            ON bai_kiem_tra.bkt_idkh = khoa_hoc.kh_id
+        `;
+
+        return res.status(200).send(await query(db, qr))
+    });
 }

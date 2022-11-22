@@ -77,7 +77,7 @@ export default function ProfileCover({myProfile}) {
                     }}
                 >
                     <Typography variant="h4">{fullname}</Typography>
-                    <Typography sx={{opacity: 0.72}}>{myProfile?.position || 'Đọc giả'}</Typography>
+                    <Typography sx={{opacity: 0.72}}>{myProfile?.position || 'Học giả'}</Typography>
                 </Box>
             </InfoStyle>
             <CoverImgStyle alt="profile cover" src={cover || '/static/avt.jpg'}/>
