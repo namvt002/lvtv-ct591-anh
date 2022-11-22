@@ -23,6 +23,7 @@ import {Icon} from '@iconify/react';
 import {useSnackbar} from 'notistack5';
 import {useSelector} from "react-redux";
 import Invoice from "./Invoice";
+import FailCertificate from "./FailCertificate";
 
 
 
@@ -51,8 +52,15 @@ export default function Certificate() {
             try {
               let _rs =  await postData(API_BASE_URL+`/api-v1/ketquakiemtra`,values);
                 setLoad((e)=> e+1);
-              console.log(_rs.data, "abbbbbbbb")
                 setKetQua(_rs.data);
+                enqueueSnackbar('Bạn đã thi xong', {
+                    variant: 'success',
+                    action: (key) => (
+                        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+                            <Icon icon={closeFill}/>
+                        </MIconButton>
+                    ),
+                })
             } catch (error) {
                 console.error(error);
                 enqueueSnackbar(error.response.data, {
@@ -220,9 +228,12 @@ export default function Certificate() {
                     </Container>
                 </Page>
                 :
-                <Page>
-                    <Invoice diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''} userName={userName} />
-                </Page>
+                ketQua.point === 'pass' ?
+                    <Page>
+                        <Invoice diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''} userName={userName} />
+                    </Page>
+                    : <FailCertificate diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''} userName={userName} />
+
             }
         </>
     );

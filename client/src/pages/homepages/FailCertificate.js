@@ -18,10 +18,8 @@ import useSettings from '../../hooks/useSettings';
 import Page from '../../components/Page';
 import Label from '../../components/Label';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import {InvoiceToolbar} from "./CertificatePDF";
 import Logo from "../../components/Logo";
 import {useSelector} from "react-redux";
-import {fCurrency} from "../../_helper/formatCurrentCy";
 
 // ----------------------------------------------------------------------
 
@@ -35,8 +33,7 @@ const RowResultStyle = styled(TableRow)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Invoice({diem, baithi, userName}) {
-    console.log(diem,baithi, userName , "Hien thi pdf trong cai pdf chinsh");
+export default function FailCertificate({diem, baithi, userName}) {
     let ngay = new Date();
     const userid = useSelector(state => state.user.current?.fullname)
     const { themeStretch } = useSettings();
@@ -50,9 +47,6 @@ export default function Invoice({diem, baithi, userName}) {
                         { name: 'Chứng chỉ' }
                     ]}
                 />
-
-                <InvoiceToolbar diem={diem} baithi={baithi} userName={userName} />
-
                 <Card sx={{ pt: 5, px: 5 }}>
                     <Grid container>
                         <Grid item xs={12} sm={6} sx={{ mb: 4, width: '300px'}}>
@@ -66,8 +60,8 @@ export default function Invoice({diem, baithi, userName}) {
 
                         <Grid item xs={12} sm={6} sx={{ mb: 5 }}>
                             <Box sx={{ textAlign: { sm: 'right' } }}>
-                                <Label color="success" sx={{ textTransform: 'uppercase', mb: 1 }}>
-                                    Đã hoàn thành chứng chỉ {baithi.baikiemtra.kh_ten}
+                                <Label color="error" sx={{ textTransform: 'uppercase', mb: 1 }}>
+                                    Chưa hoàn thành chứng chỉ {baithi.baikiemtra.kh_ten}
                                 </Label>
                                 <Typography variant="h6"></Typography>
                             </Box>
@@ -76,9 +70,8 @@ export default function Invoice({diem, baithi, userName}) {
 
                     <Grid container>
                         <Grid item xs={12} md={9} sx={{ py: 3 }}>
-                            <Typography variant="body2">Cấp chứng chỉ:</Typography>
-                            <Typography variant="h1" sx={{ml: 2, color: 'text.primary', textAlign: 'left'}}>
-                                Khóa học {baithi.baikiemtra.kh_ten}
+                            <Typography variant="h6" sx={{ml: 2, color: 'text.primary', textAlign: 'left'}}>
+                                Vui lòng thi lại để lấy chứng chỉ điểm đậu phải lơn hơn 70 điểm
                             </Typography>
                         </Grid>
                     </Grid>
@@ -86,7 +79,7 @@ export default function Invoice({diem, baithi, userName}) {
 
                     <Grid item xs={12} md={9} sx={{ py: 3 }}>
                         <Typography variant="h4" sx={{ color: 'text.primary'}}>{userName}</Typography>
-                        <Typography variant="body2">Điểm: {diem}</Typography>
+                        <Typography variant="body2">Điểm: {diem} </Typography>
                         <Typography variant="body2">
                             Ngày : {ngay.getDate()}/{ngay.getMonth()}/{ngay.getFullYear()}
                         </Typography>

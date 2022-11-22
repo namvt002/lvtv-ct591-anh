@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 // ----------------------------------------------------------------------
 
 export default function InvoicePDF({diem, baithi, userName}) {
-    console.log(diem, baithi, userName, "hien thi trong cai pdf view ne")
+
     let ngay = new Date();
     return (
         <Document>
@@ -91,7 +91,7 @@ export default function InvoicePDF({diem, baithi, userName}) {
                     <View style={styles.col8}>
                         <Text style={styles.h3}>{userName}</Text>
                         <Text style={styles.subtitle2}>Điểm: {diem} </Text>
-                        <Text style={styles.subtitle2}>Ngày thi: {ngay.getDate()}</Text>
+                        <Text style={styles.subtitle2}>Ngày thi: {ngay.getDate()}/{ngay.getMonth()}/{ngay.getFullYear()}</Text>
                     </View>
                 </View>
             </Page>
