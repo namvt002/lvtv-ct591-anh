@@ -144,7 +144,6 @@ export default function Certificate() {
                                                                                     ch_idda: [e.target.value],
                                                                                     ch_id: dataCauHoi.ch_id,
                                                                                 };
-                                                                                console.log(newSelect)
                                                                                 setFieldValue('selectValues', newSelect);
                                                                             }}
                                                                         >
@@ -201,9 +200,7 @@ export default function Certificate() {
                                                                                             ch_id: dataCauHoi.ch_id,
                                                                                         };
                                                                                     }
-
                                                                                     setFieldValue('selectValues', newSelect);
-
                                                                                 }}
                                                                                 value={dataCauHoi.ch_idda[index]}
                                                                                 control={<Checkbox/>}

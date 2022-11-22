@@ -7,6 +7,7 @@ import {Form, FormikProvider, useFormik} from 'formik';
 import {styled} from '@material-ui/core/styles';
 import {LoadingButton} from '@material-ui/lab';
 import {
+    Autocomplete,
     Card,
     FormControlLabel,
     FormHelperText,
@@ -43,6 +44,20 @@ CourseNewForm.propTypes = {
     currentProduct: PropTypes.object,
 };
 
+const Language = [{
+    id: 'html',
+    name: 'HTML'
+}, {
+    id: 'css',
+    name: 'CSS'
+}, {
+    id: 'Javascript',
+    name: 'javascript'
+}, {
+    id: 'python',
+    name: 'Python'
+}];
+
 export default function CourseNewForm({isEdit, current}) {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
@@ -60,6 +75,8 @@ export default function CourseNewForm({isEdit, current}) {
             kh_mota: current?.kh_mota || '',
             kh_code: current?.kh_code || '',
             kh_hinhanh: current?.kh_hinhanh ? URL_PUBLIC_IMAGES + `/${current?.kh_hinhanh}` : null,
+            kh_code_lang: current?.kh_code_lang || '',
+            kh_code_run: current?.kh_code_run || false,
             active: Boolean(current?.active) || true,
         },
         validationSchema: NewSchema,
@@ -181,6 +198,40 @@ export default function CourseNewForm({isEdit, current}) {
                                                 onChange={handleEditorChange}
                                             />
                                         </div>
+                                        <Stack direction='row' sx={{mt: '2rem'}} display='flex' alignItems='center'
+                                               justifyContent='center'>
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        {...getFieldProps('kh_code_run')}
+                                                        checked={values.kh_code_run}
+                                                    />
+                                                }
+                                                label="Thực thi"
+                                                sx={{mb: 2}}
+                                            />
+                                            <Autocomplete
+                                                freeSolo
+                                                value={values.kh_code_lang}
+                                                onChange={(event, newValue) => {
+                                                    setFieldValue('kh_code_lang', newValue || '');
+                                                }}
+                                                options={Language?.map((option) => ({
+                                                    id: option.id,
+                                                    name: option.name,
+                                                }))}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        label="Ngôn ngữ"
+                                                        {...params}
+                                                        sx={{width: '25rem'}}
+                                                        error={Boolean(touched.kh_code_lang && errors.kh_code_lang)}
+                                                        helperText={touched.kh_code_lang && errors.kh_code_lang}
+                                                    />
+                                                )}
+                                                getOptionLabel={(option) => option.name || ''}
+                                            />
+                                        </Stack>
                                     </Grid>
                                 </Grid>
 
