@@ -1,4 +1,4 @@
-import {Box, Button, Card, CardContent, Grid, Paper, Skeleton, Stack, TextField, Typography} from "@material-ui/core";
+import {Box, Button, Card, CardContent, Grid, Paper, Skeleton, Stack, TextField, Typography, Icon} from "@material-ui/core";
 import {useEffect, useRef, useState} from "react";
 import {getData} from "../../_helper/httpProvider";
 import {API_BASE_URL} from "../../config/configUrl";
@@ -39,10 +39,12 @@ const colorHome = [
 
 function CarouselItem({item, isActive}) {
     const isLogin = useSelector((state) => state?.user?.current?.role);
+    const id = useSelector(state => state.user.current?.id)
     const navigate = useNavigate();
     const theme = useTheme();
     const dispatch = useDispatch();
     const {kh_ten, kh_mota, kh_code, kh_makh, kh_code_run, kh_code_lang, num_bkt} = item;
+
 
     return (
         <Paper>
@@ -73,8 +75,6 @@ function CarouselItem({item, isActive}) {
                                                 isLogin ?
                                                     navigate(PATH_PAGE.certificate + `/${kh_makh}`) :
                                                     navigate(PATH_AUTH.login)
-
-
                                             }} variant='contained' disabled={num_bkt === 0} color='warning'
                                                     sx={{width: '20rem'}}>
                                                 Lấy chứng chỉ

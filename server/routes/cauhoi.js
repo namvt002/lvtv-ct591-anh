@@ -194,6 +194,7 @@ module.exports = function (app) {
 
     app.post('/api-v1/ketquakiemtra', async (req, res)=>{
         const data = req.body;
+        console.log(data);
         let ketqua = [];
         await Promise.all(
             data.selectValues.map(async (dataClient, idx)=>{
@@ -241,5 +242,18 @@ module.exports = function (app) {
         `;
 
         return res.status(200).send(await query(db, qr, [iduser]));
+    });
+    app.get("/api-v1/kiemtra-chungchi", async (req, res) => {
+        const {iduser, kh_makh} = req.query;
+        const qr = `
+             SELECT * FROM bai_kiem_tra 
+                JOIN chung_chi 
+                    ON bai_kiem_tra.bkt_id = chung_chi.cc_idbkt 
+                        JOIN khoa_hoc 
+                            ON bai_kiem_tra.bkt_idkh = khoa_hoc.kh_id
+                              WHERE chung_chi.cc_iduser = ? AND khoa_hoc.kh_makh = ?
+        `;
+
+        return res.status(200).send(await query(db, qr, [iduser, kh_makh]));
     });
 }

@@ -7,18 +7,17 @@ import {
     Button,
     Card,
     Input,
-    InputAdornment,
+    InputAdornment, Link,
     Table,
     TableBody,
     TableCell,
     TableRow,
-    Typography
 } from '@material-ui/core';
 import {useEffect, useState} from "react";
 import {getData} from "../../_helper/httpProvider";
 import {API_BASE_URL, URL_PUBLIC_IMAGES} from "../../config/configUrl";
 import {PATH_PAGE} from "../../routes/paths";
-import {Link as RouterLink, Link, useNavigate} from "react-router-dom";
+import {Link as RouterLink, useNavigate} from "react-router-dom";
 // components
 
 // ----------------------------------------------------------------------
@@ -155,9 +154,7 @@ export default function Searchbar() {
                                                                src={URL_PUBLIC_IMAGES + kh_hinhanh}/>
                                                 <Box>
                                                     <Link to={linkTo} color="inherit" component={RouterLink}>
-                                                        <Typography variant="subtitle2">
                                                             {kh_makh} - {kh_ten}
-                                                        </Typography>
 
                                                     </Link>
                                                 </Box>

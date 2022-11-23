@@ -1,9 +1,8 @@
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {getData, postData} from '../../_helper/httpProvider';
-import {API_BASE_URL} from '../../config/configUrl';
 import {
-    Box, Button,
+    Box,
+    Button,
     Card,
     Checkbox,
     Container,
@@ -17,14 +16,16 @@ import {
 } from '@material-ui/core';
 import Page from '../../components/Page';
 import {Form, FormikProvider, useFormik} from 'formik';
-import closeFill from '@iconify/icons-eva/close-fill';
-import {MIconButton} from '../../components/@material-extend';
-import {Icon} from '@iconify/react';
 import {useSnackbar} from 'notistack5';
 import {useSelector} from "react-redux";
 import Invoice from "./Invoice";
 import FailCertificate from "./FailCertificate";
 
+import {MIconButton} from "../../components/@material-extend";
+import {getData, postData} from '../../_helper/httpProvider';
+import {API_BASE_URL} from '../../../src/config/configUrl';
+import closeFill from '@iconify/icons-eva/close-fill';
+import {Icon} from '@iconify/react';
 
 
 export default function Certificate() {
@@ -39,7 +40,7 @@ export default function Certificate() {
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     const userid = useSelector(state => state.user.current?.id)
     const userName = useSelector(state => state.user.current?.fullname)
-
+    const [flag, setFlag] = useState(false);
     const [arrayErr, setArrayErr] = useState([]);
 
     const formik = useFormik({
@@ -48,30 +49,27 @@ export default function Certificate() {
             selectValues: [],
             userid: userid,
             idbkt: baiKiemTra?.baikiemtra?.bkt_id,
-            flag: false
         },
         onSubmit: async (values, {setSubmitting, resetForm, setErrors, setFieldValue}) => {
             let _values = {...values};
-            console.log(values)
-            values.selectValues.map((_data, idx)=>{
-                if( _data === undefined ){
-                   setArrayErr[idx] = `Câu hỏi: ${idx} còn trống!!!`;
+            console.log(_values)
+            let _arrErr = []
+            setFlag(false);
+            let _flag = false;
+            values.selectValues.map((_data, idx) => {
+                if (!_data) {
+                    setFlag(true);
+                    _flag = true;
+                    _arrErr[idx] = `Câu hỏi ${idx + 1} trống!!!!`;
+                    setArrayErr(_arrErr);
                 }
             });
-            console.log(values.selectValues, "aaaaaaaaa");
-            console.log(arrayErr, "Errrrrrrrrrrrrr");
-            arrayErr.map((_rs, index)=>{
-                if(_rs !== undefined){
-                    setFieldValue('flag', true);
-                }
-            });
-            console.log(values.flag);
-            if(values.flag === true){
-                return;
-            }
+
+            if (_flag) return;
+
             try {
-              let _rs =  await postData(API_BASE_URL+`/api-v1/ketquakiemtra`,values);
-                setLoad((e)=> e+1);
+                let _rs = await postData(API_BASE_URL + `/api-v1/ketquakiemtra`, _values);
+                setLoad((e) => e + 1);
                 setKetQua(_rs.data);
                 enqueueSnackbar('Bạn đã thi xong', {
                     variant: 'success',
@@ -103,15 +101,31 @@ export default function Certificate() {
         setFieldValue,
         getFieldProps,
     } = formik;
+    console.log(values)
 
     useEffect(() => {
         (async () => {
             const res = await getData(API_BASE_URL + `/api-v1/baikiemtra/${id}`);
+            const _user = await getData(API_BASE_URL + `/api-v1/kiemtra-chungchi?iduser=${userid}&&kh_makh=${id}`);
+            console.log(_user.data[0])
+            if (_user.data.length) {
+                setKetQua({
+                    message: 'pass',
+                    points: _user.data[0].cc_diem,
+                });
+                setBaiKiemTra({
+                    baikiemtra: {
+                        kh_ten: _user.data[0].kh_ten
+                    }
+                })
+
+            }
             setBaiKiemTra(res.data);
             setArrayErr([...Array(res.data.cauhoi.length)]);
             setFieldValue('selectValues', [...Array(res.data.cauhoi.length)]);
         })();
     }, [id, _load]);
+
 
     return (
         <>
@@ -140,7 +154,7 @@ export default function Certificate() {
                                                         >
                                                             <Typography
                                                                 color="ActiveBorder"
-                                                                sx={{color: 'red'}}
+                                                                sx={{color: 'blue'}}
                                                             >
                                                                 Câu hỏi {idx + 1}:
                                                             </Typography>
@@ -185,18 +199,21 @@ export default function Certificate() {
                                                                                     control={<Radio/>}
                                                                                     label={dataDapAn}
                                                                                 />{' '}
-                                                                                {(values.flag === true && arrayErr[index] !== undefined)
-                                                                                    ?
-                                                                                    <Typography variant="inherit"
-                                                                                                sx={{color: "red"}}>{arrayErr[index]}</Typography>
-                                                                                    : ""}
+
 
                                                                             </Stack>
                                                                         </RadioGroup>
+
                                                                     </div>
+
                                                                 })}
                                                             </div>
                                                         )}
+                                                        {(dataCauHoi?.ch_loaicauhoi === 'mot' && arrayErr[idx] !== undefined)
+                                                            &&
+                                                            <Typography variant="inherit"
+                                                                        sx={{color: "red"}}>{arrayErr[idx]}</Typography>
+                                                        }
 
                                                         {dataCauHoi?.ch_loaicauhoi === 'nhieu' && (
                                                             <div>
@@ -231,16 +248,18 @@ export default function Certificate() {
                                                                                 control={<Checkbox/>}
                                                                                 label={dataDapAnNhieu}
                                                                             />
-                                                                            {(values.flag === true && arrayErr[index] !== undefined)
-                                                                                ?
-                                                                                <Typography variant="inherit"
-                                                                                            sx={{color: "red"}}>{arrayErr[index]}</Typography>
-                                                                                : ""}
+
                                                                         </div>
                                                                     ),
                                                                 )}
+
                                                             </div>
                                                         )}
+                                                        {(dataCauHoi?.ch_loaicauhoi === 'nhieu' && arrayErr[idx] !== undefined)
+                                                            &&
+                                                            <Typography variant="inherit"
+                                                                        sx={{color: "red"}}>{arrayErr[idx]}</Typography>
+                                                        }
                                                     </FormControl>
                                                 </Box>
                                             ))}
@@ -255,11 +274,14 @@ export default function Certificate() {
                     </Container>
                 </Page>
                 :
-                ketQua.message === 'pass' ?
-                    <Page>
-                        <Invoice diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''} userName={userName} />
-                    </Page>
-                    : <FailCertificate diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''} userName={userName} />
+                (ketQua?.message === 'pass' && !!baiKiemTra?.baikiemtra) &&
+                <Page>
+                    <Invoice diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''}
+                             userName={userName}/>
+                </Page>}
+            {(ketQua?.message !== 'pass' && !!baiKiemTra?.baikiemtra) &&
+                <FailCertificate diem={ketQua ? ketQua?.points : 0} baithi={baiKiemTra ? baiKiemTra : ''}
+                                 userName={userName}/>
 
             }
         </>

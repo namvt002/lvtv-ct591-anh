@@ -16,7 +16,7 @@ export default function CourseContent() {
             setLessons(res.data);
             if (res.data.length > 0) setIdbh(res.data[0].bh_id)
         })()
-    }, []);
+    }, [id]);
 
     return <>
         <Grid container spacing={2}>
