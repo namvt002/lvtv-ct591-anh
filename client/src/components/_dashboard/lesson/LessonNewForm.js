@@ -184,7 +184,7 @@ export default function LessonNewForm({isEdit, current}) {
         setFieldValue('bh_tieude', '');
         setFieldValue('bh_mota', '');
         setFieldValue('bh_code', '');
-        setFieldValue('bh_active', '');
+        setFieldValue('bh_active', false);
         setFieldValue('bh_lang', '');
         setFieldValue('bh_idndbh', '');
     }
@@ -220,7 +220,7 @@ export default function LessonNewForm({isEdit, current}) {
             setFieldValue('bh_tieude', '');
             setFieldValue('bh_mota', '');
             setFieldValue('bh_code', '');
-            setFieldValue('bh_active', '');
+            setFieldValue('bh_active', false);
             setFieldValue('bh_lang', '');
             setFieldValue('bh_idndbh', '');
         }

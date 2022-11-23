@@ -38,7 +38,7 @@ export default function LessonCreate() {
                     heading={!isEdit ? 'Thêm bài học' : 'Chỉnh sửa'}
                     links={[
                         {name: 'Quản lý', href: PATH_DASHBOARD.root},
-                        {name: 'Bài học', href: PATH_DASHBOARD.course.root},
+                        {name: 'Bài học', href: PATH_DASHBOARD.lesson.root},
                         {name: !isEdit ? 'Thêm bài học' : id},
                     ]}
                 />

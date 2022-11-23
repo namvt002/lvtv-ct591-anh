@@ -68,6 +68,8 @@ module.exports = function (app) {
     app.post('/api/baihoc', async (req, res) => {
         const data = req.body;
 
+        console.log(data.bai_hoc)
+
         let bai_hoc = {
             bh_ten: data.bh_ten,
             bh_idkh: data.bh_idkh.kh_id,
