@@ -118,7 +118,6 @@ export default function BlogNewPostForm({setShowForm, setLoad, post, isEdit, han
                     heading="Thêm bài viết"
                     links={[
                         {name: 'Trang chủ', href: '/'},
-                        {name: 'Bài viết', href: '/blog'},
                         {name: isEdit ? 'Sửa bài viết' : 'Thêm bài viết'}
                     ]}
                 />

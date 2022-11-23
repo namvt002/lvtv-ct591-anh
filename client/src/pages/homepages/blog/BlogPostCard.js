@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useLocation} from 'react-router-dom';
 // material
 import {alpha, styled} from '@material-ui/core/styles';
-import {Avatar, Card, CardContent, Grid, Stack, Typography} from '@material-ui/core';
+import {Avatar, Card, CardContent, FormControlLabel, Grid, Stack, Switch, Typography} from '@material-ui/core';
 // routes
 // utils
 import SvgIconStyle from 'src/components/SvgIconStyle';
@@ -12,11 +12,12 @@ import {MIconButton} from "../../../components/@material-extend";
 import {Icon} from "@iconify/react";
 import DialogConfirm from "../../../components/_dashboard/DialogConfirm";
 import {useState} from "react";
-import {deleteData} from "../../../_helper/httpProvider";
+import {deleteData, putData} from "../../../_helper/httpProvider";
 import {API_BASE_URL} from "../../../config/configUrl";
 import closeFill from "@iconify/icons-eva/close-fill";
 import {useSnackbar} from "notistack5";
 import BlogNewPostForm from "./BlogNewPostForm";
+import {useSelector} from "react-redux";
 
 //
 
@@ -79,21 +80,45 @@ const LabelStyle = styled(Typography)(({theme}) => ({
 }));
 
 export default function BlogPostCard({post, index, isEdited, setLoad, setIsEdit, setPost}) {
+    const {pathname} = useLocation();
+    const isDashboard = pathname.includes('/dashboard');
+    const isAdmin = useSelector(state => state.user.current?.role) === "ADMIN";
     const {bv_tieude, bv_noidung, fullname, bv_ngaytao, bv_id} = post;
     const linkTo = `/blog/detail/${bv_id}`;
     const latestPostLarge = index === 0;
     const latestPost = index === 1 || index === 2;
     const [open, setOpen] = useState(false);
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+    const [hidden, setHidden] = useState(true);
+
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-
-
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const HiddenBlog = async () => {
+        try {
+            await putData(API_BASE_URL + '/api/baiviet-active', {
+                id: bv_id,
+                bv_active: !post.bv_active
+            });
+            setHidden(e => !e);
+            if (setLoad) setLoad((e) => e + 1);
+            enqueueSnackbar('Cập nhật thành công', {
+                variant: 'success',
+                action: (key) => (
+                    <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+                        <Icon icon={closeFill}/>
+                    </MIconButton>
+                ),
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
 
@@ -193,15 +218,29 @@ export default function BlogPostCard({post, index, isEdited, setLoad, setIsEdit,
                     </TitleStyle>
                     {isEdited && (
                         <Stack direction='row' justifyContent='end'>
-                            <MIconButton  onClick = {()=>{
-                                if(setPost) setPost(post);
-                                if(setIsEdit) setIsEdit(true);
-                            }}>
-                                <Icon icon={'bx:edit'} color={'rgb(0,166,178)'}/>
-                            </MIconButton>
-                            <MIconButton onClick={() => handleClickOpen()}>
-                                <Icon icon={'ic:round-delete'} color={'red'}/>
-                            </MIconButton>
+                            {(!isDashboard) && <>
+                                <MIconButton  onClick = {()=>{
+                                    if(setPost) setPost(post);
+                                    if(setIsEdit) setIsEdit(true);
+                                }}>
+                                    <Icon icon={'bx:edit'} color={'rgb(0,166,178)'}/>
+                                </MIconButton>
+                                <MIconButton onClick={() => handleClickOpen()}>
+                                    <Icon icon={'ic:round-delete'} color={'red'}/>
+                                </MIconButton></>
+                            }
+
+                            {(isAdmin  && isDashboard)  &&
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            onClick={()=>HiddenBlog()}
+                                            checked={post.bv_active}
+                                        />
+                                    }
+                                    label="Ẩn/Hiện"
+                                />
+                            }
                         </Stack>
                     )}
                 </CardContent>

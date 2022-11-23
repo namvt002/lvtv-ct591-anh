@@ -56,6 +56,9 @@ export const PATH_DASHBOARD = {
         root: path(ROOTS_DASHBOARD, '/question'),
         new: path(ROOTS_DASHBOARD, '/question/new')
     },
+    blogmanager: {
+        root: path(ROOTS_DASHBOARD, '/blogmanager'),
+    }
 
 
 };

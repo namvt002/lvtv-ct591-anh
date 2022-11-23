@@ -40,6 +40,9 @@ module.exports = function (app) {
         return res.status(200).send(await query(db, `SELECT bai_viet.*, users.fullname FROM bai_viet LEFT JOIN users ON users.id = bv_iduser WHERE 
             bai_viet.bv_active = 1 AND bv_iduser = ?`, req.params.id));
     })
+    app.get('/api/baiviet-user', async (req, res) => {
+        return res.status(200).send(await query(db, `SELECT bai_viet.*, users.fullname FROM bai_viet LEFT JOIN users ON users.id = bv_iduser `));
+    })
 
     app.post('/api/baiviet', upload.single("bv_anh"), async (req, res) => {
         let {data, bv_iduser} = req.body;
@@ -57,16 +60,9 @@ module.exports = function (app) {
         return res.status(200).send("ok");
     })
     app.put('/api/baiviet-active', async (req, res) => {
-        const {id, active, arrID} = req.body;
-        const qr = "UPDATE khoa_hoc SET active = ? where kh_id = ?";
-        if (!!arrID) {
-            let _arrID = JSON.parse(arrID);
-            await Promise.all(
-                _arrID.map(async e => await query(db, qr, [active, e]))
-            )
-        } else {
-            await query(db, qr, [active, id]);
-        }
+        const {id, bv_active} = req.body;
+        const qr = "UPDATE bai_viet SET bv_active = ? where bv_id = ?";
+        await query(db, qr, [bv_active, id]);
         return res.status(200).send("Cập nhật thành công");
     });
 

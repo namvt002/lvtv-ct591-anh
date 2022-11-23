@@ -13,7 +13,7 @@ module.exports = function (app) {
     app.post('/api-v1/runcode', async (req, res) => {
         const {code, lang, id} = req.body;
         if (lang === 'html' || lang === 'javascript' || lang === 'css') {
-            console.log(lang)
+            console.log(lang, code)
             try {
                 fs.writeFileSync(__dirname + `/../public/views/pro_${id}.html`, code);
                 // file written successfully
@@ -41,7 +41,7 @@ module.exports = function (app) {
 
                 } else {
                     let dt = ''
-                    data.map(e => dt += e + "\n");
+                    data?.map(e => dt += e + "\n");
                     html = `
                     <!DOCTYPE html>
                         <html lang="en">

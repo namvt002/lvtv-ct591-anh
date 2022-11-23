@@ -121,7 +121,24 @@ export default function Router() {
                 {
                     path: 'store',
                     element: <Store/>
-                }
+                },
+                {
+                    path: 'blogmanager',
+                    children: [{
+                        path: '',
+                        element: <BlogManager />,
+                    },
+                        {
+                            path: 'new',
+                            element: <BlogNewPostForm/>
+                        }, {
+                            path: ':id/edit',
+                            element: <BlogNewPostForm/>
+                        }, {
+                            path: 'detail/:id',
+                            element: <BlogDetail/>
+                        }]
+                },
             ],
         },
 
@@ -207,6 +224,8 @@ const Profile = Loadable(lazy(() => import('../pages/homepages/Profile')))
 const BlogNewPostForm = Loadable(lazy(() => import('../pages/homepages/blog/BlogNewPostForm')))
 const BlogPosts = Loadable(lazy(() => import('../pages/homepages/blog/BlogPosts')))
 const BlogDetail = Loadable(lazy(() => import('../pages/homepages/blog/BlogDetail')))
+const BlogManager = Loadable(lazy(() => import('../pages/dashboard/BlogManager')))
+
 
 
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));

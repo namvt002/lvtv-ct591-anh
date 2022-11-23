@@ -11,7 +11,7 @@ import {Icon} from '@iconify/react';
 
 export default function RunCode() {
     const {code, lang, id} = useSelector(state => state.code);
-    const [codeEditor, setCodeEditor] = useState('');
+    const [codeEditor, setCodeEditor] = useState(code);
     const [load, setLoad] = useState(1);
 
     // const dispatch = useDispatch();

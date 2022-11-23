@@ -40,15 +40,35 @@ export default function Certificate() {
     const userid = useSelector(state => state.user.current?.id)
     const userName = useSelector(state => state.user.current?.fullname)
 
+    const [arrayErr, setArrayErr] = useState([]);
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
             selectValues: [],
             userid: userid,
-            idbkt: baiKiemTra?.baikiemtra?.bkt_id
+            idbkt: baiKiemTra?.baikiemtra?.bkt_id,
+            flag: false
         },
-        onSubmit: async (values, {setSubmitting, resetForm, setErrors}) => {
+        onSubmit: async (values, {setSubmitting, resetForm, setErrors, setFieldValue}) => {
             let _values = {...values};
+            console.log(values)
+            values.selectValues.map((_data, idx)=>{
+                if( _data === undefined ){
+                   setArrayErr[idx] = `Câu hỏi: ${idx} còn trống!!!`;
+                }
+            });
+            console.log(values.selectValues, "aaaaaaaaa");
+            console.log(arrayErr, "Errrrrrrrrrrrrr");
+            arrayErr.map((_rs, index)=>{
+                if(_rs !== undefined){
+                    setFieldValue('flag', true);
+                }
+            });
+            console.log(values.flag);
+            if(values.flag === true){
+                return;
+            }
             try {
               let _rs =  await postData(API_BASE_URL+`/api-v1/ketquakiemtra`,values);
                 setLoad((e)=> e+1);
@@ -88,6 +108,7 @@ export default function Certificate() {
         (async () => {
             const res = await getData(API_BASE_URL + `/api-v1/baikiemtra/${id}`);
             setBaiKiemTra(res.data);
+            setArrayErr([...Array(res.data.cauhoi.length)]);
             setFieldValue('selectValues', [...Array(res.data.cauhoi.length)]);
         })();
     }, [id, _load]);
@@ -133,8 +154,8 @@ export default function Certificate() {
                                                         </FormLabel>
                                                         {dataCauHoi?.ch_loaicauhoi === 'mot' && (
                                                             <div>
-                                                                {dataCauHoi.ch_dapan.map((dataDapAn, index) => (
-                                                                    <div key={index}>
+                                                                {dataCauHoi.ch_dapan.map((dataDapAn, index) => {
+                                                                    return <div key={index}>
                                                                         <RadioGroup
                                                                             name="radio-buttons-group"
                                                                             value={values.selectValues[index]?.ch_idda}
@@ -164,10 +185,16 @@ export default function Certificate() {
                                                                                     control={<Radio/>}
                                                                                     label={dataDapAn}
                                                                                 />{' '}
+                                                                                {(values.flag === true && arrayErr[index] !== undefined)
+                                                                                    ?
+                                                                                    <Typography variant="inherit"
+                                                                                                sx={{color: "red"}}>{arrayErr[index]}</Typography>
+                                                                                    : ""}
+
                                                                             </Stack>
                                                                         </RadioGroup>
                                                                     </div>
-                                                                ))}
+                                                                })}
                                                             </div>
                                                         )}
 
@@ -181,13 +208,11 @@ export default function Certificate() {
                                                                                     let newSelect = [...values.selectValues];
                                                                                     if (values.selectValues[idx]?.ch_idda?.length > 0) {
                                                                                         let idx1 = values.selectValues[idx].ch_idda.findIndex(el => Number(el) === Number(e.target.value));
-                                                                                        console.log(idx1)
                                                                                         if (idx1 !== -1) {
                                                                                             newSelect[idx] = {
                                                                                                 ch_idda: values.selectValues[idx].ch_idda.filter(el1 => Number(el1) !== Number(e.target.value)),
                                                                                                 ch_id: dataCauHoi.ch_id,
                                                                                             }
-
                                                                                         } else {
                                                                                             newSelect[idx] = {
                                                                                                 ch_idda: [...values.selectValues[idx].ch_idda, e.target.value],
@@ -206,6 +231,11 @@ export default function Certificate() {
                                                                                 control={<Checkbox/>}
                                                                                 label={dataDapAnNhieu}
                                                                             />
+                                                                            {(values.flag === true && arrayErr[index] !== undefined)
+                                                                                ?
+                                                                                <Typography variant="inherit"
+                                                                                            sx={{color: "red"}}>{arrayErr[index]}</Typography>
+                                                                                : ""}
                                                                         </div>
                                                                     ),
                                                                 )}
